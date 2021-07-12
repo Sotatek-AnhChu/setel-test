@@ -1,0 +1,49 @@
+# Compiled output
+/dist
+/node_modules
+
+#api-doc
+api-doc
+redoc-static.html
+
+#public folder
+/public
+
+# Environment
+.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+
+# Data
+data/mongo/*
+data/redis/persistence/*
+data/redis/run/*
+!data/**/.gitkeep
+
+# Upload folder
+uploads/**/*
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode

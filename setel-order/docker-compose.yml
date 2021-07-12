@@ -1,0 +1,41 @@
+version: "3.7"
+
+services:
+    # webapp:
+    #     build:
+    #         context: .
+    #     container_name: setel-order-app
+    #     env_file: 
+    #         - .env
+    #     ports: 
+    #         - 3303:${SERVER_PORT}
+    #     networks:
+    #         - template_network
+            
+    mongodb_container:
+        container_name: ${MONGO_CONTAINER_NAME}
+        image: mongo:4.2
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+            MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+        ports:
+            - ${MONGO_PORT}:27017
+        volumes:
+            - db-data-order:/data/db
+        networks:
+            - template_network
+
+    redis:
+        container_name: ${REDIS_CONTAINER_NAME}
+        image: redis:6.2.4
+        ports:
+            - ${REDIS_PORT}:6379
+        networks:
+            - template_network
+
+volumes: 
+    db-data-order:
+
+networks:
+    template_network:
+        name: ${NETWORK_NAME}
