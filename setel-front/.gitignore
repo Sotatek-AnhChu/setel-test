@@ -6,9 +6,6 @@
 api-doc
 redoc-static.html
 
-#public folder
-/public
-
 # Environment
 .env
 
