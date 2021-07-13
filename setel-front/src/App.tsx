@@ -11,7 +11,6 @@ import { PublicRoute } from './components/router/public.router';
 import { LoginPage } from './pages/login/login.page';
 import { NotFound } from './pages/not-found';
 import { userState } from './states/userState';
-require("./common/const/end-point.const")
 const App = () => {
   const history = useHistory();
   const [user, setUser] = useRecoilState(userState);
