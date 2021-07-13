@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import  classes  from "./not-found.module.css";
 
-const NotFound = () => {
+export const NotFound = () => {
     return (
         <div className={classes.root}>
             <div className={classes.main}>
@@ -21,5 +21,3 @@ const NotFound = () => {
         </div>
     );
 };
-
-export default NotFound

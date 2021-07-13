@@ -14,11 +14,9 @@ interface PropTypes extends RouteProps {
  * @param rest
  *  Props passed ins
  */
-const PublicRoute = ({
+export const PublicRoute = ({
     component: Component,
     ...rest
 }: PropTypes) => {
     return <Route {...rest} render={(props) => <Component {...props} />} />;
 };
-
-export default PublicRoute;

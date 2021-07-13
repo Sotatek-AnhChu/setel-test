@@ -1,13 +1,14 @@
+import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { CallService } from './api/call-service';
 import './App.css';
-import { REFRESH_TOKEN_LOCAL } from './common/const/local-storage.const';
-import PublicRoute from './components/router/public.router';
-import PrivateRoutesController from './controller/private.controller';
-import LoginPage from './pages/login/login.page';
-import NotFound from './pages/not-found';
+import { REFRESH_TOKEN_COOKIES } from './common/const/cookies.const';
+import { PublicRoute } from './components/router/public.router';
+import { PrivateRoutesController } from './controller/private.controller';
+import { LoginPage } from './pages/login/login.page';
+import { NotFound } from './pages/not-found';
 import { userState } from './states/userState';
 require("./common/const/end-point.const")
 const App = () => {
@@ -15,7 +16,7 @@ const App = () => {
   const [user, setUser] = useRecoilState(userState);
   const [loading, setLoading]  = useState(true);
   useEffect(() => {
-    const token = localStorage.getItem(REFRESH_TOKEN_LOCAL);
+    const token =  Cookies.get(REFRESH_TOKEN_COOKIES);
     if (token === undefined || token == null) {
       history.push("/login");
     }
@@ -26,7 +27,7 @@ const App = () => {
         setLoading(false);
     }).catch((e) => {
       if (e.response && e.response.status === 401) {
-        localStorage.clear();
+        Cookies.remove(REFRESH_TOKEN_COOKIES)
       }
       setLoading(false);
       history.push("/login");

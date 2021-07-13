@@ -4,56 +4,53 @@ import { IOrder } from "../../common/interface/order.interface";
 
 
 export interface Props {
-    classes?: object,
     onSubmit: () => any,
-    orderSampleData?: any,
+    orderSampleData?: IOrder,
 }
 
-export const  OrderForm = ({
-    classes: propsClasses,
+export const OrderForm = ({
     onSubmit: fatherOnSubmit,
     orderSampleData
 }: Props) => {
-    const isEdit = (orderSampleData == null || orderSampleData === undefined); 
     const onFinish = async (value: IOrder) => {
-        if (isEdit) {
-            CallService.createOrder(value)
-                .catch((e) => {
-                console.log(e.response);
-                message.error(e?.response?.data?.error?.message);
-           });
-        } else {
-            CallService.updateOrder(orderSampleData._id, value)
+        if ((orderSampleData == null || orderSampleData === undefined)) {
+            await CallService.createOrder(value)
                 .catch((e) => {
                     console.log(e.response);
-                    message.error(e.response?.data?.error?.message);
-                })
+                    message.error(e?.response?.data?.error?.message);
+                });
+        } else {
+            await CallService.updateOrder(orderSampleData._id, value)
+            .catch((e) => {
+                console.log(e.response);
+                message.error(e.response?.data?.error?.message);
+            })
         }
         fatherOnSubmit();
     }
 
     return (
-        <Form 
+        <Form
             id="orderForm"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            initialValues= {orderSampleData}
-            onFinish = {onFinish}
-        >  
+            initialValues={orderSampleData}
+            onFinish={onFinish}
+        >
             <Form.Item
-             label = "Product"
-             name =  "product"
-              >
+                label="Product"
+                name="product"
+            >
                 <Input />
             </Form.Item>
             <Form.Item
-            label="Card Id"
-            name = "cardId">
+                label="Card Id"
+                name="cardId">
                 <Input />
             </Form.Item>
-            <Form.Item 
-                label = "Price"
-                name = "price">
+            <Form.Item
+                label="Price"
+                name="price">
                 <InputNumber />
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

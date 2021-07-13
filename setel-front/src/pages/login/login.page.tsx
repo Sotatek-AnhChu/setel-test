@@ -3,10 +3,12 @@ import { useEffect } from "react";
 import { useHistory } from "react-router";
 import { useSetRecoilState } from "recoil";
 import client from "../../api/client";
-import { REFRESH_TOKEN_LOCAL } from "../../common/const/local-storage.const";
-import { useLocalStorage } from "../../common/ultils/local-storage";
+import { PROFILE_ENTPOINT } from "../../common/const/end-point.const";
+import { REFRESH_TOKEN_COOKIES } from "../../common/const/cookies.const";
+
 import { userState } from "../../states/userState";
 import classes from "./login.module.css";
+import { useCookiesStorage } from "../../common/ultils/cookies";
 
 const layout = {
     labelCol: { span: 8 },
@@ -21,13 +23,13 @@ interface LoginForm {
     password: string;
 }
 
-const LoginPage = () => {
+export const LoginPage = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [token, setToken] = useLocalStorage(REFRESH_TOKEN_LOCAL, null);
+    const [token, setToken] = useCookiesStorage(REFRESH_TOKEN_COOKIES, null);
     const setUser = useSetRecoilState(userState);
 
     const getUser = () => {
-        client.get("http://localhost:3025/users/my/profile").then((res) => {
+        client.get(PROFILE_ENTPOINT).then((res) => {
             return res.data
         }).then((response) => {
             const user = response.data;
@@ -111,5 +113,3 @@ const LoginPage = () => {
         </div>
     )
 }
-
-export default LoginPage;

@@ -11,7 +11,7 @@ export interface Props {
     classes?: any,
 }
 
-const OrderList = ({ classes: propsClasses }: Props) => {
+export const OrderList = ({ classes: propsClasses }: Props) => {
     const classes = Object.assign(defaultClasses, propsClasses);
 
     const [data, setData] = useState([]);
@@ -112,7 +112,7 @@ const OrderList = ({ classes: propsClasses }: Props) => {
                 <OrderForm
                     key = {Math.random()}
                     onSubmit = {onEditOrderSubmit}
-                    orderSampleData ={orderSampleData}
+                    orderSampleData ={orderSampleData as any}
                 />
             </Modal>
             <Modal 
@@ -136,5 +136,3 @@ const OrderList = ({ classes: propsClasses }: Props) => {
         </div>
     )
 }
-
-export default OrderList;

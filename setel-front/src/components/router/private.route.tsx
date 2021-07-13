@@ -20,7 +20,7 @@ interface PropTypes extends RouteProps {
  * @param rest
  *  Props passed in
  */
-const PrivateRoute: React.FC<PropTypes> = ({
+export const PrivateRoute: React.FC<PropTypes> = ({
     component: Component,
     ...rest
 }) => {
@@ -40,4 +40,3 @@ const PrivateRoute: React.FC<PropTypes> = ({
     );
 };
 
-export default PrivateRoute;

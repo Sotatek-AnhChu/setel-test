@@ -3,9 +3,9 @@ import React, { useEffect } from "react";
 
 // Libs
 import { Route, Switch } from "react-router-dom";
-import OrderList from "../components/order-list/order-list";
-import PrivateRoute from "../components/router/private.route";
-import NotFound from "../pages/not-found";
+import { OrderList } from "../components/order-list/order-list";
+import  { PrivateRoute } from "../components/router/private.route";
+import { NotFound } from "../pages/not-found";
 
 // pages
 
@@ -13,7 +13,7 @@ import NotFound from "../pages/not-found";
 // Route types
 
 
-const PrivateRoutesController = () => {
+export const PrivateRoutesController = () => {
 
     useEffect(() => {
         // mockData();
@@ -30,5 +30,3 @@ const PrivateRoutesController = () => {
         </Switch>
     );
 };
-
-export default (PrivateRoutesController);

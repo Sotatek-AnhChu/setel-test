@@ -1,5 +1,8 @@
 import axios from "axios";
-import { ACCESS_TOKEN_LOCAL, REFRESH_TOKEN_LOCAL } from "../common/const/local-storage.const";
+import { Console } from "console";
+import Cookies from "js-cookie";
+import { ACCESS_TOKEN_COOKIES, REFRESH_TOKEN_COOKIES } from "../common/const/cookies.const";
+import { ACCESS_TOKEN_ENPOINT } from "../common/const/end-point.const";
 
 const headers = {
     Accept: "application/json",
@@ -8,15 +11,14 @@ const headers = {
 
 
 const getAccessToken = async () => {
-    const rawRefreshToken = window.localStorage.getItem(REFRESH_TOKEN_LOCAL);
-    const refreshToken = rawRefreshToken ? JSON.parse(rawRefreshToken) : null;
+    const refreshToken = Cookies.get(REFRESH_TOKEN_COOKIES);
     if (refreshToken) {
-        const response = await axios.post("http://localhost:3025/auth/access-token", {
+        const response = await axios.post(ACCESS_TOKEN_ENPOINT, {
             refreshToken,
         }).then(res => res.data)
         const accessToken = response.accessToken;
         // console.log("Access Token " + accessToken);
-        localStorage.setItem(ACCESS_TOKEN_LOCAL, JSON.stringify(accessToken));
+        Cookies.set(ACCESS_TOKEN_COOKIES, accessToken);
         return accessToken;
     }
 }
@@ -29,7 +31,7 @@ const client = axios.create({
 
 client.interceptors.request.use(
     async (config: any) => {
-        let token = localStorage.getItem(ACCESS_TOKEN_LOCAL);
+        let token = Cookies.get(ACCESS_TOKEN_COOKIES);
         if (token) {
             if (token[0] === '"') {
                 token = token?.substring(1, token.length - 1);
