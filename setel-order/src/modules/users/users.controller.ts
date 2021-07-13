@@ -39,7 +39,6 @@ export class UsersController {
     @ApiOkResponse({ type: ResponseDTO })
     async getMyProfile(@ReqUser("_id") userId: string): Promise<ResponseDTO> {
         const data = await this.userService.getProfile(userId);
-        console.log(data);
         return ResponseTool.GET_OK(data);
     }
 
@@ -54,36 +53,36 @@ export class UsersController {
     @Post("/register")
     @ApiCreatedResponse({ type: GetUserDTO })
     @ApiConsumes("multipart/form-data")
-    @UseInterceptors(FileInterceptor("anhDaiDien", UploadTool.imageUpload))
-    async create(@Body() user: RegisterUserDTO, @UploadedFile() anhDaiDien: Express.Multer.File): Promise<User> {
-        return await this.userService.createUser(user as User, anhDaiDien);
+    @UseInterceptors(FileInterceptor("avatar", UploadTool.imageUpload))
+    async create(@Body() user: RegisterUserDTO, @UploadedFile() avatar: Express.Multer.File): Promise<User> {
+        return await this.userService.createUser(user as User, avatar);
     }
 
     @Put(":id")
     @ApiOkResponse({ type: GetUserDTO })
     @ApiConsumes("multipart/form-data")
-    @UseInterceptors(FileInterceptor("anhDaiDien", UploadTool.imageUpload))
+    @UseInterceptors(FileInterceptor("avatar", UploadTool.imageUpload))
     @Authorization()
     @Roles(ERole.ADMIN)
     async updateById(
         @Param("id") id: string,
         @Body() user: UpdateUserDTO,
-        @UploadedFile() anhDaiDien: Express.Multer.File,
+        @UploadedFile() avatar: Express.Multer.File,
     ): Promise<User> {
-        return await this.userService.updateByIdUser(id, user as User, anhDaiDien);
+        return await this.userService.updateByIdUser(id, user as User, avatar);
     }
 
     @Put("my/profile")
     @ApiOkResponse({ type: GetUserDTO })
     @ApiConsumes("multipart/form-data")
-    @UseInterceptors(FileInterceptor("anhDaiDien", UploadTool.imageUpload))
+    @UseInterceptors(FileInterceptor("avatar", UploadTool.imageUpload))
     @Authorization()
     async updateMyUser(
         @Body() user: UpdateMyUserDTO,
-        @UploadedFile() anhDaiDien: Express.Multer.File,
+        @UploadedFile() avatar: Express.Multer.File,
         @ReqUser("_id") userId: string,
     ): Promise<User> {
-        return await this.userService.updateByIdUser(userId, user as User, anhDaiDien);
+        return await this.userService.updateByIdUser(userId, user as User, avatar);
     }
 
     @Delete("username/:username")

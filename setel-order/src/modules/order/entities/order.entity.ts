@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, Min } from "class-validator";
+import { IsDefined, IsNotEmpty, IsNumber, IsString, Min } from "class-validator";
 import * as mongoose from "mongoose";
 import { Document } from "mongoose";
 import { EOrderStatus } from "src/config/constants";
@@ -18,6 +18,7 @@ export const ORDER_DB = "order";
 export class Order {
     @ApiProperty({
         type: String,
+        required: true,
     })
     @Prop({
         type: mongoose.Schema.Types.String,
@@ -37,17 +38,28 @@ export class Order {
     status: EOrderStatus;
 
     @ApiProperty()
-    @Prop()
+    @Prop({
+        required: true,
+    })
+    @IsString()
     @IsNotEmpty()
+    @IsDefined()
     product: string;
 
     @ApiProperty()
-    @Prop()
+    @Prop({
+        required: true,
+    })
+    @IsString()
     @IsNotEmpty()
     cardId: string;
 
-    @ApiProperty()
-    @Prop()
+    @ApiProperty({
+        required: true,
+    })
+    @Prop({
+        required: true,
+    })
     @IsNumber()
     @Min(0)
     price: number;

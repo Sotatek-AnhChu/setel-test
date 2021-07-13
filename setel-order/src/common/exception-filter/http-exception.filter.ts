@@ -1,9 +1,10 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpException, Logger } from "@nestjs/common";
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Logger } from "@nestjs/common";
 import { Request } from "express";
+import * as path from "path";
 import { MSG } from "../../config/constants";
 import { PRODUCTION } from "../../config/secrets";
 import { User } from "../../modules/users/users.entities";
-import * as path from "path";
+
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
     private readonly PROJECT_DIR = path.join(__dirname, "../../../");
@@ -14,30 +15,22 @@ export class HttpExceptionFilter implements ExceptionFilter {
     }
 
     async catch(exception: any, host: ArgumentsHost) {
-        console.log(exception);
         this.logger.error(exception.stack);
         this.logger.error(JSON.stringify(exception, null, 2));
         const ctx = host.switchToHttp();
         const request = ctx.getRequest<Request>();
         const response = ctx.getResponse();
-        let statusCode: number;
-        let mongoConflict = false;
-        this.logger.error(exception);
+        let statusCode: any = HttpStatus.INTERNAL_SERVER_ERROR;
+        let message: any = MSG.RESPONSE.INTERNAL_SERVER_ERROR;
         if (exception instanceof HttpException) {
-            statusCode = exception.getStatus();
-        } else if (exception.name === "MongoError" && exception.code === 11000) {
-            statusCode = 409;
-            mongoConflict = true;
-        } else {
-            statusCode = 500;
+            [statusCode, message] = this.handleHttpException(exception);
         }
-        let message = "";
-        if (!mongoConflict) {
-            message = (statusCode !== 500 && exception.response.error) || MSG.RESPONSE.INTERNAL_SERVER_ERROR;
-        } else {
-            message = `Duplicate : ${Object.values(exception.keyValue).join(", ")}`;
+        if (String(exception.name) === "MongoError" && exception.code === 11000) {
+            [statusCode, message] = this.handleConflict(exception);
         }
-
+        if (String(exception.name) === "ValidationError") {
+            [statusCode, message] = this.handleValidatorError(exception);
+        }
         const user = request.user as User;
         const time = new Date().toLocaleString();
         const routePath = `${request.method} ${request.originalUrl}`;
@@ -57,5 +50,23 @@ export class HttpExceptionFilter implements ExceptionFilter {
             statusCode,
         };
         response.status(statusCode).json(errorObject);
+    }
+
+    handleHttpException(exception: any) {
+        const statusCode = Number(exception.getStatus());
+        const message = exception.response.message;
+        return [statusCode, message];
+    }
+
+    handleValidatorError(exception: any) {
+        const statusCode = HttpStatus.BAD_REQUEST;
+        const message = exception.message;
+        return [statusCode, message];
+    }
+
+    handleConflict(exception: any) {
+        const statusCode = HttpStatus.CONFLICT;
+        const message = `Duplicate : ${Object.values(exception.keyValue).join(", ")}`;
+        return [statusCode, message];
     }
 }

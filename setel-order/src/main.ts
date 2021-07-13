@@ -32,7 +32,9 @@ async function bootstrap() {
     app.useGlobalPipes(
         new ValidationPipe({
             whitelist: true,
-            skipUndefinedProperties: true,
+            transformOptions: {
+                exposeDefaultValues: true,
+            },
             exceptionFactory: (errs) => {
                 return new BadRequestException(errs, MSG.RESPONSE.BAD_REQUEST);
             },
