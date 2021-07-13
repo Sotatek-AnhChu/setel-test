@@ -220,8 +220,6 @@ export class UsersService {
                 },
             })
             .sort(option.sort)
-            .populate("khoa")
-            .populate("vaiTroQuanTri")
             .select({ password: 0 })
             .skip(option.skip)
             .limit(option.limit)
