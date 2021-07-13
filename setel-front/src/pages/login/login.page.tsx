@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useHistory } from "react-router";
 import { useSetRecoilState } from "recoil";
 import client from "../../api/client";
-import { PROFILE_ENTPOINT } from "../../common/const/end-point.const";
+import { LOGIN_ENDPOINT, PROFILE_ENTPOINT } from "../../common/const/end-point.const";
 import { REFRESH_TOKEN_COOKIES } from "../../common/const/cookies.const";
 
 import { userState } from "../../states/userState";
@@ -55,7 +55,7 @@ export const LoginPage = () => {
     const handleLoginForm = async (loginInfo: LoginForm) => {
         console.log("debug");
         await client.post(
-            "http://localhost:3025/auth/login", loginInfo
+            LOGIN_ENDPOINT, loginInfo
         )
             .then((res) => {
                 return res.data;

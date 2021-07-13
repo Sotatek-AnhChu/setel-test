@@ -1,5 +1,5 @@
 
-import { Modal, Table } from "antd";
+import { Modal, Table, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { Edit3, XCircle } from "react-feather";
 import { CallService } from "../../api/call-service";
@@ -37,16 +37,21 @@ export const OrderList = ({ classes: propsClasses }: Props) => {
             title: "Action",
             render: (text: any, record: any) => {
                 return (<div>
+
                     <button 
                         className={classes.btn} 
                         onClick = {() => showEditOrder(record)} >
-                            <Edit3 />
+                            <Tooltip placement = "top" title = "Edit">
+                                <Edit3 />
+                            </Tooltip>
                     </button>
                     
                     <button 
                         className={classes.btn} 
                         onClick = {() => cancelOrder(record)} >
-                            <XCircle />
+                            <Tooltip placement = "top" title = "Cancel">
+                                <XCircle />
+                            </Tooltip>
                     </button>
                 </div>)
             }

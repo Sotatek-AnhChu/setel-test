@@ -5,8 +5,9 @@ import { useRecoilState } from 'recoil';
 import { CallService } from './api/call-service';
 import './App.css';
 import { REFRESH_TOKEN_COOKIES } from './common/const/cookies.const';
+import { OrderList } from './components/order-list/order-list';
+import { PrivateRoute } from './components/router/private.route';
 import { PublicRoute } from './components/router/public.router';
-import { PrivateRoutesController } from './controller/private.controller';
 import { LoginPage } from './pages/login/login.page';
 import { NotFound } from './pages/not-found';
 import { userState } from './states/userState';
@@ -40,7 +41,15 @@ const App = () => {
   }
 
   if(user){
-      return <PrivateRoutesController/>
+      return (
+        <Switch>
+            <PrivateRoute
+                component={OrderList}
+                path="/"
+            />
+            <Route component={NotFound} />
+        </Switch>
+    );
   }
 
   return (

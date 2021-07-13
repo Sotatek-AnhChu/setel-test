@@ -37,7 +37,6 @@ export class AuthService {
 
     async login(user: UserDocument, timestamp: number = Date.now()): Promise<LoginResponseDTO> {
         const jti = new ObjectID().toHexString();
-        // TODO: API login get token
         const payload = {
             sub: user._id,
             jti,

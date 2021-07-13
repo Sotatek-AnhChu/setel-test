@@ -17,7 +17,7 @@ export class OrderProcessor {
         private readonly paymentWebhookService: PaymentWebhookService,
     ) {}
 
-    private readonly logger: Logger = new Logger("OrderProcessor");
+    private readonly logger: Logger = new Logger(OrderProcessor.name);
 
     @Process({
         name: CONFIRMED_EVENT_NAME,
@@ -54,6 +54,7 @@ export class OrderProcessor {
                 done(e);
                 return;
             });
+        done(null, "Suceess");
     }
 
     @OnQueueWaiting()

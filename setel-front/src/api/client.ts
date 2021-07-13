@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Console } from "console";
 import Cookies from "js-cookie";
 import { ACCESS_TOKEN_COOKIES, REFRESH_TOKEN_COOKIES } from "../common/const/cookies.const";
 import { ACCESS_TOKEN_ENPOINT } from "../common/const/end-point.const";
