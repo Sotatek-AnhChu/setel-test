@@ -4,7 +4,7 @@ import { IOrder } from "../../common/interface/order.interface";
 
 
 export interface Props {
-    onSubmit: () => any,
+    onSubmit: () => void,
     orderSampleData?: IOrder,
 }
 

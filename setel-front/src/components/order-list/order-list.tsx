@@ -73,6 +73,7 @@ export const OrderList = ({ classes: propsClasses }: Props) => {
     }
 
     const showNewOrder = () => {
+        setOrderSampleData(null);
         setShowNew(true);
     }
     
