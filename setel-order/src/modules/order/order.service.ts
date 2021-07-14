@@ -1,5 +1,5 @@
 import { InjectQueue } from "@nestjs/bull";
-import { BadRequestException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { Queue } from "bull";
 import { EOrderStatus } from "src/config/constants";
 import { QueryPostOption } from "src/tools/request.tool";
@@ -62,11 +62,11 @@ export class OrderService {
             throw new NotFoundException(HttpStatus.NOT_FOUND, "Cannot find order with this id");
         }
         if ((oldOrder as OrderDocument).user != username) {
-            throw new BadRequestException(HttpStatus.BAD_REQUEST, "Not same username");
+            throw new ForbiddenException(HttpStatus.FORBIDDEN, "Not same username");
         }
         if (oldOrder.status === EOrderStatus.CONFIRMED || oldOrder.status === EOrderStatus.CREATED) {
             oldOrder.status = EOrderStatus.CANCELLED;
-            oldOrder.save();
+            await oldOrder.save();
             return oldOrder;
         }
         throw new BadRequestException(HttpStatus.BAD_REQUEST, `Cannot change order with ${oldOrder.status} status`);
@@ -78,7 +78,7 @@ export class OrderService {
             throw new NotFoundException(HttpStatus.NOT_FOUND, "Cannot find order with this id");
         }
         if ((oldOrder as OrderDocument).user != username) {
-            throw new BadRequestException(HttpStatus.BAD_REQUEST, "Not same username");
+            throw new ForbiddenException(HttpStatus.FORBIDDEN, "Not same username");
         }
         order = {
             ...oldOrder,
@@ -98,12 +98,14 @@ export class OrderService {
         if (Object.values(EOrderStatus).indexOf(order.status) < 0) {
             throw new BadRequestException(HttpStatus.BAD_REQUEST, "Status not valid");
         }
-        return this.orderRepository.updateById({
-            id,
-            update: order,
-            options: {
-                new: true,
-            },
-        });
+        return this.orderRepository
+            .updateById({
+                id,
+                update: order,
+                options: {
+                    new: true,
+                },
+            })
+            .exec();
     }
 }

@@ -5,9 +5,6 @@ dotenv.config();
 
 export const getEnv = (key: string, ignore = false): string => {
     const value = process.env[key];
-    if (!ignore && value === undefined) {
-        console.log(yellow(`[ENV] ${key} not found!`));
-    }
     return value;
 };
 
