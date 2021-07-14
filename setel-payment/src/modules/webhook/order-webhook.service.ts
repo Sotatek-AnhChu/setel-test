@@ -14,16 +14,16 @@ interface PaymentResponseOrder {
 export class OrderWebhookService {
     constructor(private readonly httpService: HttpService, private readonly paymentService: PaymentService) {}
 
-    async wait20s() {
+    async waitSomeTime(time: number) {
         return new Promise<void>((resolve) => {
             setTimeout(() => {
                 resolve();
-            }, 20000);
+            }, time);
         });
     }
 
     async confirmOrder(order: OrderDTO) {
-        await this.wait20s(); // Mock waiting time for demo.
+        await this.waitSomeTime(5000); // Mock waiting time for demo.
         const isConfirmed = Math.random() > 0.5 ? false : true;
         this.paymentService.create({
             orderId: order._id,

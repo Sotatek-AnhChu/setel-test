@@ -40,20 +40,26 @@ export const OrderForm = ({
             <Form.Item
                 label="Product"
                 name="product"
+                rules = {[{required: true}]}
             >
                 <Input />
             </Form.Item>
             <Form.Item
                 label="Card Id"
-                name="cardId">
+                name="cardId"
+                rules = {[{required: true}]}
+            >
                 <Input />
             </Form.Item>
             <Form.Item
                 label="Price"
-                name="price">
+                name="price"
+                rules = {[{required: true}]}
+                >
                 <InputNumber />
             </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }}
+            >
                 <Button type="primary" htmlType="submit">
                     Submit
                 </Button>

@@ -46,19 +46,8 @@ export const REDIS_PORT = Number(getEnv("REDIS_PORT"));
 export const REDIS_HOST = getEnv("REDIS_HOST");
 export const REDIS_PASSWORD = getEnv("REDIS_PASSWORD");
 
-export const ONE_SIGNAL_APP_ID = getEnv("ONE_SIGNAL_APP_ID");
-export const ONE_SIGNAL_API_KEY = getEnv("ONE_SIGNAL_API_KEY");
-export const MAILER_EMAIL_ID = getEnv("MAILER_EMAIL_ID");
-export const MAILER_PASSWORD = getEnv("MAILER_PASSWORD");
-
 // Swagger
 export const SWAGGER_PATH = getEnv("SWAGGER_PATH");
-
-// Third party Authentication
-export const FACEBOOK_CLIENT_ID = getEnv("FACEBOOK_CLIENT_ID");
-export const FACEBOOK_CLIENT_SECRET = getEnv("FACEBOOK_CLIENT_SECRET");
-export const GOOGLE_CLIENT_ID = getEnv("GOOGLE_CLIENT_ID");
-export const GOOGLE_CLIENT_SECRET = getEnv("GOOGLE_CLIENT_SECRET");
 
 // Project
 export const DEFAULT_USER_PASSWORD = getEnv("DEFAULT_USER_PASSWORD");
@@ -66,4 +55,3 @@ export const DEFAULT_USER_PASSWORD = getEnv("DEFAULT_USER_PASSWORD");
 //Service
 export const APIKEY = getEnv("API_KEY");
 export const PAYMENT_SERVICE = getEnv("PAYMENT_SERVICE");
-export const ORDER_SERVICE = getEnv("ORDER_SERVICE");
