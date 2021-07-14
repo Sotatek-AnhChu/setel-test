@@ -19,6 +19,7 @@ Keep terminal window run.
 Install dependency for nodejs.
 - git init
 - npm ci
+
 We need git init because Husky need git to install node module
 
 Run app
