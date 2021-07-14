@@ -5,6 +5,7 @@
 - Mongodb 4.2
 - Redis 6.2.4
 - git
+
 Mongodb and redis run in docker and expose port to local host.
 
 ## Setup enviroment variable and run database.
@@ -18,7 +19,9 @@ Keep terminal window run.
 Install dependency for nodejs.
 - git init
 - npm ci
+
 We need git init because Husky need git to install node module
+
 Run app
 
 - npm run start
