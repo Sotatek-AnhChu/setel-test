@@ -16,14 +16,14 @@ export const OrderForm = ({
         if ((orderSampleData == null || orderSampleData === undefined)) {
             await CallService.createOrder(value)
                 .catch((e) => {
-                    console.log(e.response);
-                    message.error(e?.response?.data?.error?.message);
+                    console.log(e.response?.data?.exception?.response?.error);
+                    message.error(e.response?.data?.exception?.response?.error);
                 });
         } else {
             await CallService.updateOrder(orderSampleData._id, value)
             .catch((e) => {
-                console.log(e.response);
-                message.error(e.response?.data?.error?.message);
+                console.log(e.response?.data?.exception?.response?.error);
+                message.error(e.response?.data?.exception?.response?.error);
             })
         }
         fatherOnSubmit();

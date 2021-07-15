@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">64.29% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>9/14</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">58.33% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/12</span>
+                <span class='fraction'>7/12</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -84,46 +84,46 @@
 <a name='L25'></a><a href='#L25'>25</a>
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { Body, Controller, Param, Put } from "@nestjs/common";</span>
-<span class="cstat-no" title="statement not covered" >import { ApiHeader, ApiTags } from "@nestjs/swagger";</span>
-<span class="cstat-no" title="statement not covered" >import { EOrderStatus } from "src/config/constants";</span>
-<span class="cstat-no" title="statement not covered" >import { ResponseTool } from "src/tools/response.tool";</span>
-<span class="cstat-no" title="statement not covered" >import { OrderService } from "../order/order.service";</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Body, Controller, Param, Put } from "@nestjs/common";
+import { ApiHeader, ApiTags } from "@nestjs/swagger";
+import { EOrderStatus } from "src/config/constants";
+import { ResponseTool } from "src/tools/response.tool";
+import { OrderService } from "../order/order.service";
 &nbsp;
-interface PaymentResponseOrder {
+export interface PaymentResponseOrder {
     isConfirmed: boolean;
 }
 &nbsp;
 @Controller("webhook/payment")
 @ApiTags("Webhook payment")
-<span class="cstat-no" title="statement not covered" >export class <span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" >PaymentWebhookController </span>{</span></span>
+export class PaymentWebhookController {
 <span class="fstat-no" title="function not covered" >    constructor(private readonly <span class="cstat-no" title="statement not covered" >o</span>rderService: O</span>rderService) {}
 &nbsp;
     @Put("confirm/:id")
@@ -131,7 +131,7 @@ interface PaymentResponseOrder {
         name: "api-key",
         description: "Api key",
     })
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >    async </span>confirm(@Body() result: PaymentResponseOrder, @Param("id") id: string) {</span>
+<span class="fstat-no" title="function not covered" >    async </span>confirm(@Body() result: PaymentResponseOrder, @Param("id") id: string) {
         const { isConfirmed } = <span class="cstat-no" title="statement not covered" >result;</span>
         const orderStatus = <span class="cstat-no" title="statement not covered" >isConfirmed == true ? EOrderStatus.CONFIRMED : EOrderStatus.CANCELLED;</span>
 <span class="cstat-no" title="statement not covered" >        this.orderService.confirmOrder(id, orderStatus);</span>
@@ -145,7 +145,7 @@ interface PaymentResponseOrder {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Jul 15 2021 13:04:26 GMT+0700 (Indochina Time)
+                at Thu Jul 15 2021 16:41:28 GMT+0700 (Indochina Time)
             </div>
         </div>
         <script src="../prettify.js"></script>

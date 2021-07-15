@@ -15,13 +15,16 @@ export class PaymentService extends BaseService<PaymentDocument> {
     }
 
     async refundPayment(orderId: string) {
-        this.paymentModel
+        return this.paymentModel
             .findOneAndUpdate(
                 {
                     orderId,
                 },
                 {
                     status: EPaymentStatus.REFUND,
+                },
+                {
+                    new: true,
                 },
             )
             .exec();

@@ -1,8 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { Promise } from "bluebird";
 import * as crypto from "crypto";
 import { Redis } from "ioredis";
-import { DEFAULT_CONCURRENCY_LOW } from "../../../config/constants";
 import { REDIS_CLIENT } from "../redis-tool/redis-tool.provider";
 
 @Injectable()
@@ -28,38 +26,6 @@ export class AuthToolService {
     async checkJWTKey(userID: string, jti: string): Promise<boolean> {
         return this.redisClient.get(this.JWTKey(userID, jti)).then((value) => {
             return value ? true : false;
-        });
-    }
-
-    async deleteJWTKey(userID: string, jti: string): Promise<number> {
-        return this.redisClient.unlink(this.JWTKey(userID, jti));
-    }
-
-    async deleteJWTKeys(userID: string, timestamp: number = Date.now()): Promise<void> {
-        const stream = this.redisClient.scanStream({
-            match: `JWT\\[${userID}*`,
-            count: 100,
-        });
-        return new Promise((resolve, reject) => {
-            stream.on("data", async (resultKeys: any[]) => {
-                stream.pause();
-                await Promise.map(
-                    resultKeys,
-                    async (key) => {
-                        const oldTimestamp = await this.redisClient.get(key);
-                        if (Number(oldTimestamp) < timestamp) {
-                            await this.redisClient.unlink(key);
-                        }
-                    },
-                    { concurrency: DEFAULT_CONCURRENCY_LOW },
-                ).catch((err) => {
-                    reject(err);
-                });
-                stream.resume();
-            });
-            stream.on("end", () => {
-                resolve();
-            });
         });
     }
 }

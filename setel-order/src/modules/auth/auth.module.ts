@@ -19,7 +19,7 @@ import { LocalStrategy } from "./strategies/local.strategy";
             },
         }),
     ],
-    providers: [AuthService, LocalStrategy, JwtStrategy] /*FacebookStrategy, GoogleStrategy],*/,
+    providers: [AuthService, LocalStrategy, JwtStrategy],
     controllers: [Authentication],
     exports: [AuthService],
 })

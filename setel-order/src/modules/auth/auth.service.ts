@@ -1,7 +1,6 @@
 import { forwardRef, HttpStatus, Inject, Injectable, Logger, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { ObjectID } from "mongodb";
-import { CommonResponseDTO } from "../../common/dto/common-response.dto";
 import { MSG } from "../../config/constants";
 import { ACCESS_TOKEN_EXP, JWT_SECRET, REFRESH_TOKEN_EXP } from "../../config/secrets";
 import { AuthToolService } from "../tool/auth-tool/auth-tool.service";
@@ -52,11 +51,11 @@ export class AuthService {
         try {
             this.jwtService.verify(refreshToken);
         } catch (e) {
-            throw new UnauthorizedException(HttpStatus.UNAUTHORIZED, "Invalid token");
+            throw new UnauthorizedException(AuthService.name, "Invalid token");
         }
         const refreshPayload: PayloadDTO = this.jwtService.decode(refreshToken) as PayloadDTO;
         if (!(await this.authToolService.checkJWTKey(refreshPayload.sub, refreshPayload.jti))) {
-            throw new UnauthorizedException(HttpStatus.UNAUTHORIZED, "Token expried");
+            throw new UnauthorizedException(AuthService.name, "Token expried");
         }
         const user = (await this.userService.findById(refreshPayload.sub)) as User;
         const accessToken = this.jwtService.sign(user, {
@@ -67,10 +66,5 @@ export class AuthService {
             user,
             accessToken,
         };
-    }
-
-    async invalidateOtherUserTokens(userID: string): Promise<CommonResponseDTO> {
-        this.authToolService.deleteJWTKeys(userID);
-        return { success: true };
     }
 }

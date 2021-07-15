@@ -1,5 +1,5 @@
 import { InjectQueue } from "@nestjs/bull";
-import { BadRequestException, ForbiddenException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { Queue } from "bull";
 import { EOrderStatus } from "src/config/constants";
 import { QueryPostOption } from "src/tools/request.tool";
@@ -19,8 +19,8 @@ export class OrderService {
         return this.orderRepository.create(order);
     }
 
-    async getPagination(query: QueryPostOption) {
-        return this.orderRepository.getPagination(query);
+    async getAll(query: QueryPostOption) {
+        return this.orderRepository.getMany(query);
     }
 
     getById({ id }: { id: string }) {
@@ -59,10 +59,10 @@ export class OrderService {
     async cancelOrder(idOrder: string, username: string): Promise<any> {
         const oldOrder = await this.orderRepository.getById({ id: idOrder }).exec();
         if (!oldOrder) {
-            throw new NotFoundException(HttpStatus.NOT_FOUND, "Cannot find order with this id");
+            throw new NotFoundException(OrderService.name, "Cannot find order with this id");
         }
         if ((oldOrder as OrderDocument).user != username) {
-            throw new ForbiddenException(HttpStatus.FORBIDDEN, "Not same username");
+            throw new ForbiddenException(OrderService.name, "Not same username");
         }
         if (oldOrder.status === EOrderStatus.CONFIRMED || oldOrder.status === EOrderStatus.CREATED) {
             const result = await this.orderRepository
@@ -80,16 +80,16 @@ export class OrderService {
                 .exec();
             return result;
         }
-        throw new BadRequestException(HttpStatus.BAD_REQUEST, `Cannot change order with ${oldOrder.status} status`);
+        throw new BadRequestException(OrderService.name, `Cannot change order with ${oldOrder.status} status`);
     }
 
     async updateOrderWithId(id: string, order: Order, username: string): Promise<OrderDocument> {
         const oldOrder = await this.orderRepository.getById({ id }).lean().exec();
         if (oldOrder == null || oldOrder == undefined) {
-            throw new NotFoundException(HttpStatus.NOT_FOUND, "Cannot find order with this id");
+            throw new NotFoundException(OrderService.name, "Cannot find order with this id");
         }
         if ((oldOrder as OrderDocument).user != username) {
-            throw new ForbiddenException(HttpStatus.FORBIDDEN, "Not same username");
+            throw new ForbiddenException(OrderService.name, "Not same username");
         }
         order = {
             ...oldOrder,
@@ -100,14 +100,14 @@ export class OrderService {
             oldOrder.status == EOrderStatus.DELIVERED ||
             oldOrder.status == EOrderStatus.CONFIRMED
         ) {
-            throw new BadRequestException(HttpStatus.BAD_REQUEST, `Cannot change order with ${oldOrder.status} status`);
+            throw new BadRequestException(OrderService.name, `Cannot change order with ${oldOrder.status} status`);
         }
 
         if (order.status == EOrderStatus.DELIVERED || order.status == EOrderStatus.CONFIRMED) {
-            throw new BadRequestException(HttpStatus.BAD_REQUEST, `Cannot change order to ${order.status} status`);
+            throw new BadRequestException(OrderService.name, `Cannot change order to ${order.status} status`);
         }
         if (Object.values(EOrderStatus).indexOf(order.status) < 0) {
-            throw new BadRequestException(HttpStatus.BAD_REQUEST, "Status not valid");
+            throw new BadRequestException(OrderService.name, "Status not valid");
         }
         return this.orderRepository
             .updateById({

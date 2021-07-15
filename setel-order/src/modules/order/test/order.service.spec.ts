@@ -5,15 +5,15 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { Connection } from "mongoose";
 import { EOrderStatus } from "src/config/constants";
 import { REDIS_HOST, REDIS_PASSWORD, REDIS_PORT } from "src/config/secrets";
+import { UserSchema, USER_DB } from "src/modules/users/users.entities";
+import { PaymentWebhookService } from "src/modules/webhook/payment-webhook.service";
 import { clearMongodb, closeInMongodConnection, rootMongooseTestModule } from "src/test/helper/mongodb-memory";
 import { orderSample } from "src/test/helper/order/order.helper";
-import { UserSchema, USER_DB } from "../users/users.entities";
-import { PaymentWebhookService } from "../webhook/payment-webhook.service";
-import { Order, OrderSchema, ORDER_DB } from "./entities/order.entity";
-import { OrderController } from "./order.controller";
-import { OrderProcessor } from "./order.processor";
-import { OrderRepository } from "./order.repository";
-import { OrderService } from "./order.service";
+import { Order, OrderSchema, ORDER_DB } from "../entities/order.entity";
+import { OrderController } from "../order.controller";
+import { OrderProcessor } from "../order.processor";
+import { OrderRepository } from "../order.repository";
+import { OrderService } from "../order.service";
 
 describe("OrderService", () => {
     let orderService: OrderService;

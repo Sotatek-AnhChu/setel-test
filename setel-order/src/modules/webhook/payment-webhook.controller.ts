@@ -4,7 +4,7 @@ import { EOrderStatus } from "src/config/constants";
 import { ResponseTool } from "src/tools/response.tool";
 import { OrderService } from "../order/order.service";
 
-interface PaymentResponseOrder {
+export interface PaymentResponseOrder {
     isConfirmed: boolean;
 }
 

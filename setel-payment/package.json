@@ -66,6 +66,7 @@
     "lint-staged": ">=10",
     "lru-cache": "^6.0.0",
     "moment": "^2.29.1",
+    "mongodb-memory-server": "^7.2.0",
     "mongoose": "^5.11.15",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
@@ -124,7 +125,7 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
+    "rootDir": ".",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
@@ -133,7 +134,10 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "modulePaths": [
+      "<rootDir>"
+    ]
   },
   "lint-staged": {
     "*.ts": [

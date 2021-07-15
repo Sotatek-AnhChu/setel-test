@@ -33,17 +33,17 @@ export class OrderController {
     @Get("get-my")
     @Roles(ERole.USER)
     async getAllMyOrder(@ReqUser("username") username: string): Promise<ResponseDTO> {
-        const { data, total } = await this.orderService.getPagination({
+        const data = await this.orderService.getAll({
             conditions: {
                 user: username,
             },
             options: {
                 sort: {
-                    createdAt: 1,
+                    createdAt: -1,
                 },
             },
         });
-        return ResponseTool.GET_OK(data, total);
+        return ResponseTool.GET_OK(data);
     }
 
     @Put("/cancel/:id")
@@ -54,7 +54,7 @@ export class OrderController {
 
     @Put(":id")
     @Roles(ERole.USER)
-    async updateById(@Param("id") id: string, @Body() updateOrderDTO: UpdateOrderDTO, @ReqUser() user: User) {
-        return ResponseTool.PUT_OK(await this.orderService.updateOrderWithId(id, updateOrderDTO as Order, user.username));
+    async updateById(@Param("id") id: string, @Body() updateOrderDTO: UpdateOrderDTO, @ReqUser("username") username: string) {
+        return ResponseTool.PUT_OK(await this.orderService.updateOrderWithId(id, updateOrderDTO as Order, username));
     }
 }

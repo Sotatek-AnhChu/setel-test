@@ -3,11 +3,11 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { Connection } from "mongoose";
 import { clearMongodb, closeInMongodConnection, rootMongooseTestModule } from "src/test/helper/mongodb-memory";
 import { createdUser, createdUser2 } from "src/test/helper/user/user.helper";
-import { QueryOption } from "../../tools/request.tool";
-import { UsersController } from "./users.controller";
-import { User, UserSchema, USER_DB } from "./users.entities";
-import { UserRepository } from "./users.repository";
-import { UsersService } from "./users.service";
+import { QueryOption } from "../../../tools/request.tool";
+import { UsersController } from "../users.controller";
+import { User, UserSchema, USER_DB } from "../users.entities";
+import { UserRepository } from "../users.repository";
+import { UsersService } from "../users.service";
 
 describe("UserService", () => {
     let usersService: UsersService;

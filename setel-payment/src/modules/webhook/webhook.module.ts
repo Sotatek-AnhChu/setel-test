@@ -7,5 +7,6 @@ import { OrderWebhookService } from "./order-webhook.service";
     imports: [HttpModule, PaymentModule],
     providers: [OrderWebhookService],
     controllers: [OrderWebhookController],
+    exports: [OrderWebhookService],
 })
 export class WebhookModule {}

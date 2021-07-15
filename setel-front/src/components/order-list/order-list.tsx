@@ -1,4 +1,4 @@
-import { Modal, Table, Tooltip } from "antd";
+import { message, Modal, Table, Tooltip } from "antd";
 import { useEffect, useState } from "react";
 import { Edit3, XCircle } from "react-feather";
 import { CallService } from "../../api/call-service";
@@ -59,11 +59,7 @@ export const OrderList = ({ classes: propsClasses }: Props) => {
     },
   ];
   const fetchData = async () => {
-    await CallService.getMyOrder({
-      params: {
-        sort: "createdAt",
-      },
-    })
+    await CallService.getMyOrder({})
       .then((res) => {
         return res.data;
       })
@@ -98,6 +94,9 @@ export const OrderList = ({ classes: propsClasses }: Props) => {
   const cancelOrder = (order: IOrder) => {
     CallService.cancelOrder(order._id).then(() => {
       fetchData();
+    }).catch((e) => {
+      console.log(e.response?.data?.exception?.response?.error);
+      message.error(e.response?.data?.exception?.response?.error);
     });
   };
 
