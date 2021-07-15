@@ -62,12 +62,4 @@ export class AuthToolService {
             });
         });
     }
-    validateUsernameOrEmail(username: string): boolean {
-        return (
-            /^[A-Za-z0-9._-]{4,64}$/g.test(username) || // username
-            /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/g.test(
-                username,
-            )
-        ); // email
-    }
 }

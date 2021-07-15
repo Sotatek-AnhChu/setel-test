@@ -1,11 +1,12 @@
 import { BullModule } from "@nestjs/bull";
 import { BadRequestException, ForbiddenException, HttpModule, NotFoundException } from "@nestjs/common";
-import { MongooseModule } from "@nestjs/mongoose";
-import { Test } from "@nestjs/testing";
+import { getConnectionToken, MongooseModule } from "@nestjs/mongoose";
+import { Test, TestingModule } from "@nestjs/testing";
+import { Connection } from "mongoose";
 import { EOrderStatus } from "src/config/constants";
 import { REDIS_HOST, REDIS_PASSWORD, REDIS_PORT } from "src/config/secrets";
-import { rootMongooseTestModule } from "src/test/helper/mongodb-memory";
-import { SampleCreateOrder } from "src/test/helper/order/order.helper";
+import { clearMongodb, closeInMongodConnection, rootMongooseTestModule } from "src/test/helper/mongodb-memory";
+import { orderSample } from "src/test/helper/order/order.helper";
 import { UserSchema, USER_DB } from "../users/users.entities";
 import { PaymentWebhookService } from "../webhook/payment-webhook.service";
 import { Order, OrderSchema, ORDER_DB } from "./entities/order.entity";
@@ -16,8 +17,11 @@ import { OrderService } from "./order.service";
 
 describe("OrderService", () => {
     let orderService: OrderService;
-    beforeEach(async () => {
-        const moduleRef = await Test.createTestingModule({
+    let connection: Connection;
+    let moduleRef: TestingModule;
+
+    beforeAll(async (done) => {
+        moduleRef = await Test.createTestingModule({
             imports: [
                 rootMongooseTestModule(),
                 BullModule.registerQueue({
@@ -39,6 +43,18 @@ describe("OrderService", () => {
             exports: [OrderService],
         }).compile();
         orderService = moduleRef.get<OrderService>(OrderService);
+        connection = await moduleRef.get(getConnectionToken());
+        done();
+    });
+    afterEach(async () => {
+        await clearMongodb(connection);
+    });
+
+    afterAll(async (done) => {
+        await connection.close();
+        await closeInMongodConnection();
+        await moduleRef.close();
+        done();
     });
 
     const createOrder = (order: Order) => {
@@ -47,6 +63,7 @@ describe("OrderService", () => {
     };
 
     describe("Create Order", () => {
+        const SampleCreateOrder = orderSample[1];
         it("Create order ok", async () => {
             const result = await createOrder(SampleCreateOrder);
             expect(result).toEqual(result);
@@ -58,6 +75,7 @@ describe("OrderService", () => {
         });
     });
     describe("Get Order By Id", () => {
+        const SampleCreateOrder = orderSample[1];
         it("Get Order ok", async () => {
             const orderCreated = await createOrder(SampleCreateOrder);
             const result = await orderService.getById({ id: orderCreated._id }).lean();
@@ -66,6 +84,7 @@ describe("OrderService", () => {
         });
     });
     describe("Confirm order", () => {
+        const SampleCreateOrder = orderSample[1];
         it("Success set to delivery", async () => {
             const orderCreated = await createOrder(SampleCreateOrder);
             const mock = jest.fn();
@@ -87,6 +106,7 @@ describe("OrderService", () => {
         });
     });
     describe("Cancel Order", () => {
+        const SampleCreateOrder = orderSample[1];
         it("Success cancel Order", async () => {
             const orderCreated = await createOrder(SampleCreateOrder);
             await orderService.cancelOrder(orderCreated._id, orderCreated.user as any);
@@ -117,7 +137,8 @@ describe("OrderService", () => {
         });
     });
     describe("update order with id", () => {
-        it("not found order", async () => {
+        const SampleCreateOrder = orderSample[1];
+        it("Not found order", async () => {
             const order = { ...SampleCreateOrder };
             await expect(
                 orderService.updateOrderWithId("60eeb284e578bef6ffa959d4", order, "sample order user" as any),
@@ -159,7 +180,7 @@ describe("OrderService", () => {
                 orderService.updateOrderWithId(orderCreated._id, orderToBeUpdate, orderCreated.user as any),
             ).rejects.toBeInstanceOf(BadRequestException);
         });
-        it("Succes chang order", async () => {
+        it("Success chang order", async () => {
             const orderCreated = await orderService.create(SampleCreateOrder);
             const orderToBeUpdate = orderCreated;
             orderToBeUpdate.product = Math.random().toString(36).substring(7);
@@ -167,8 +188,9 @@ describe("OrderService", () => {
             orderToBeUpdate.price = Math.random() * 300;
             await orderService.updateOrderWithId(orderCreated._id, orderToBeUpdate, orderCreated.user as any);
             const result = await orderService.getById({ id: orderCreated.id }).lean();
-            console.log(result);
-            expect(result).toMatchObject(orderToBeUpdate);
+            expect(orderToBeUpdate.product).toEqual(result.product);
+            expect(orderToBeUpdate.cardId).toEqual(result.cardId);
+            expect(orderToBeUpdate.price).toEqual(result.price);
         });
     });
 });

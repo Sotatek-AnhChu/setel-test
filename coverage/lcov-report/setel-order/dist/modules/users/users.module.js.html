@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/25</span>
+                <span class='fraction'>0/21</span>
             </div>
         
             
@@ -39,14 +39,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/20</span>
+                <span class='fraction'>0/16</span>
             </div>
         
             
@@ -83,21 +83,7 @@
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
 <a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a>
-<a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a>
-<a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a>
-<a name='L40'></a><a href='#L40'>40</a>
-<a name='L41'></a><a href='#L41'>41</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L27'></a><a href='#L27'>27</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -113,22 +99,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -146,11 +118,8 @@ var __decorate = <span class="cstat-no" title="statement not covered" >(this &am
 };
 <span class="cstat-no" title="statement not covered" >Object.defineProperty(exports, "__esModule", { value: true });</span>
 <span class="cstat-no" title="statement not covered" >exports.UsersModule = void 0;</span>
-const bull_1 = <span class="cstat-no" title="statement not covered" >require("@nestjs/bull");</span>
 const common_1 = <span class="cstat-no" title="statement not covered" >require("@nestjs/common");</span>
 const mongoose_1 = <span class="cstat-no" title="statement not covered" >require("@nestjs/mongoose");</span>
-const secrets_1 = <span class="cstat-no" title="statement not covered" >require("../../config/secrets");</span>
-const auth_module_1 = <span class="cstat-no" title="statement not covered" >require("../auth/auth.module");</span>
 const users_controller_1 = <span class="cstat-no" title="statement not covered" >require("./users.controller");</span>
 const users_entities_1 = <span class="cstat-no" title="statement not covered" >require("./users.entities");</span>
 const users_repository_1 = <span class="cstat-no" title="statement not covered" >require("./users.repository");</span>
@@ -159,18 +128,7 @@ let UsersModule = <span class="cstat-no" title="statement not covered" >class Us
 };
 <span class="cstat-no" title="statement not covered" >UsersModule = __decorate([</span>
     common_1.Module({
-        imports: [
-            common_1.forwardRef(<span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >auth_module_1.AuthModule)</span>,
-            bull_1.BullModule.registerQueue({
-                name: "user",
-                redis: {
-                    host: secrets_1.REDIS_HOST,
-                    port: secrets_1.REDIS_PORT,
-                    password: secrets_1.REDIS_PASSWORD,
-                },
-            }),
-            mongoose_1.MongooseModule.forFeature([{ name: users_entities_1.USER_DB, schema: users_entities_1.UserSchema }]),
-        ],
+        imports: [mongoose_1.MongooseModule.forFeature([{ name: users_entities_1.USER_DB, schema: users_entities_1.UserSchema }])],
         controllers: [users_controller_1.UsersController],
         providers: [users_service_1.UsersService, users_repository_1.UserRepository],
         exports: [users_service_1.UsersService],
@@ -184,7 +142,7 @@ let UsersModule = <span class="cstat-no" title="statement not covered" >class Us
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Jul 14 2021 15:54:18 GMT+0700 (Indochina Time)
+                at Thu Jul 15 2021 09:39:49 GMT+0700 (Indochina Time)
             </div>
         </div>
         <script src="../../../../prettify.js"></script>

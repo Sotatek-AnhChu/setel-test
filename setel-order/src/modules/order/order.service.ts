@@ -58,16 +58,27 @@ export class OrderService {
 
     async cancelOrder(idOrder: string, username: string): Promise<any> {
         const oldOrder = await this.orderRepository.getById({ id: idOrder }).exec();
-        if (oldOrder == null || oldOrder == undefined) {
+        if (!oldOrder) {
             throw new NotFoundException(HttpStatus.NOT_FOUND, "Cannot find order with this id");
         }
         if ((oldOrder as OrderDocument).user != username) {
             throw new ForbiddenException(HttpStatus.FORBIDDEN, "Not same username");
         }
         if (oldOrder.status === EOrderStatus.CONFIRMED || oldOrder.status === EOrderStatus.CREATED) {
-            oldOrder.status = EOrderStatus.CANCELLED;
-            await oldOrder.save();
-            return oldOrder;
+            const result = await this.orderRepository
+                .updateById({
+                    id: oldOrder._id,
+                    update: {
+                        $set: {
+                            status: EOrderStatus.CANCELLED,
+                        },
+                    },
+                    options: {
+                        new: true,
+                    },
+                })
+                .exec();
+            return result;
         }
         throw new BadRequestException(HttpStatus.BAD_REQUEST, `Cannot change order with ${oldOrder.status} status`);
     }

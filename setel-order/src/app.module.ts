@@ -3,6 +3,7 @@ import { APP_FILTER } from "@nestjs/core";
 import { MongooseModule } from "@nestjs/mongoose";
 import { HttpExceptionFilter } from "./common/exception-filter/http-exception.filter";
 import { DATABASE_URI } from "./config/secrets";
+import { AuthModule } from "./modules/auth/auth.module";
 import { OrderModule } from "./modules/order/order.module";
 import { AuthToolModule } from "./modules/tool/auth-tool/auth-tool.module";
 import { RedisToolModule } from "./modules/tool/redis-tool/redis-tool.module";
@@ -22,6 +23,7 @@ const redisStore = require("cache-manager-redis-store");
             retryDelay: 5000,
         }),
         UsersModule,
+        AuthModule,
         AuthToolModule,
         RedisToolModule,
         OrderModule,

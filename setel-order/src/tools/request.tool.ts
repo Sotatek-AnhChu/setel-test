@@ -12,9 +12,9 @@ export interface QueryPreOption {
 }
 
 export interface QueryOption {
-    select: { [field: string]: 0 | 1 };
-    skip: number;
-    limit: number;
+    select?: { [field: string]: 0 | 1 };
+    skip?: number;
+    limit?: number;
     sort?: {
         [field: string]: -1 | 1;
     };

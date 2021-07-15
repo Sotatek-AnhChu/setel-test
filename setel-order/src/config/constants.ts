@@ -38,9 +38,9 @@ export enum ERole {
     DEVELOPER,
 }
 
-export enum EGioiTinh {
-    NAM,
-    NU,
+export enum EGender {
+    MALE,
+    FEMALE,
 }
 
 export enum ENotificationStatus {

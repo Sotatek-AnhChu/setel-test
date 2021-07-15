@@ -12,7 +12,6 @@ import { MSG } from "./config/constants";
 import { RedisIoAdapter } from "./config/redis-adapter";
 import { PRODUCTION, PROJECT_NAME, PROJECT_VERSION, SERVER_PORT, SWAGGER_PATH } from "./config/secrets";
 import { MongoTool } from "./tools/mongo.tool";
-import { RateLimitTool } from "./tools/rate-limit";
 
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -26,7 +25,6 @@ async function bootstrap() {
             contentSecurityPolicy: false,
         }),
     );
-    app.use(RateLimitTool.API_LIMITER);
 
     // Class-validation
     app.useGlobalPipes(

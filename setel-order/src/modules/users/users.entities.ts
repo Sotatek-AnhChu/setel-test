@@ -4,7 +4,7 @@ import * as bcrypt from "bcryptjs";
 import { IsEmail, IsString, Length } from "class-validator";
 import * as mongoose from "mongoose";
 import { IsFullName, IsPassword, IsPhoneNumber, IsUsername } from "../../common/decorators/constants.decorator";
-import { EGioiTinh, ERole } from "../../config/constants";
+import { EGender, ERole } from "../../config/constants";
 import { StringTool } from "../../tools/string.tool";
 import { USER_CONST } from "./constants/users.constant";
 
@@ -58,9 +58,9 @@ export class User {
 
     @ApiProperty()
     @Prop({
-        enum: Object.values(EGioiTinh),
+        enum: Object.values(EGender),
     })
-    sex: EGioiTinh;
+    gender: EGender;
 
     @Length(USER_CONST.USERNAME_MIN_LENGTH, USER_CONST.USERNAME_MAX_LENGTH)
     @ApiProperty()
@@ -110,14 +110,6 @@ export class User {
     })
     role: ERole;
 
-    @ApiProperty()
-    @Prop({})
-    contactEmail: string;
-
-    @ApiProperty({ type: "string", format: "binary", required: false })
-    @Prop({})
-    avatar: string;
-
     @Prop({})
     jti: string;
 
@@ -128,11 +120,6 @@ export class User {
         type: Date,
     })
     expiredAt: Date;
-
-    @Prop({
-        type: Date,
-    })
-    lastTimeLogin: Date;
 
     comparePassword: (password: string) => Promise<boolean>;
     compareResetPasswordToken: (password: string) => Promise<boolean>;

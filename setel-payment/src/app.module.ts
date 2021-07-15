@@ -4,11 +4,8 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { HttpExceptionFilter } from "./common/exception-filter/http-exception.filter";
 import { DATABASE_URI } from "./config/secrets";
 import { ApikeyMiddleware } from "./middlewares/apikey.middleware";
-import { AppSocketModule } from "./modules/app-socket/app-socket.module";
-import { RedisCacheModule } from "./modules/redis-cache/redis-cache.module";
-import { RedisToolModule } from "./modules/tool/redis-tool/redis-tool.module";
-import { WebhookModule } from "./modules/webhook/webhook.module";
 import { PaymentModule } from "./modules/payment/payment.module";
+import { WebhookModule } from "./modules/webhook/webhook.module";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const redisStore = require("cache-manager-redis-store");
@@ -22,9 +19,6 @@ const redisStore = require("cache-manager-redis-store");
             useCreateIndex: true,
             retryDelay: 5000,
         }),
-        AppSocketModule,
-        RedisCacheModule,
-        RedisToolModule,
         WebhookModule,
         PaymentModule,
     ],

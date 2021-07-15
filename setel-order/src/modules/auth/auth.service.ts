@@ -9,7 +9,6 @@ import { User, UserDocument } from "../users/users.entities";
 import { UsersService } from "../users/users.service";
 import { AccessTokenResponse } from "./dto/access-token-response.dto";
 import { LoginResponseDTO } from "./dto/login-response.dto";
-import { LogoutResponseDTO } from "./dto/logout-response.dto";
 import { PayloadDTO } from "./dto/payload.dto";
 
 @Injectable()
@@ -47,14 +46,6 @@ export class AuthService {
             user,
             refreshToken: this.jwtService.sign(payload),
         };
-    }
-
-    async logout(refreshToken: string): Promise<LogoutResponseDTO> {
-        const payload: PayloadDTO = this.jwtService.decode(refreshToken) as PayloadDTO;
-        const userId = payload.sub;
-        const jti = payload.jti;
-        this.authToolService.deleteJWTKey(userId, jti);
-        return { message: "Good bye :)" };
     }
 
     async signAccessToken(refreshToken: string): Promise<AccessTokenResponse> {

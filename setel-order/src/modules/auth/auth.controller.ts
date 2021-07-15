@@ -8,7 +8,6 @@ import { AuthService } from "./auth.service";
 import { AccessTokenResponse } from "./dto/access-token-response.dto";
 import { AuthDTO } from "./dto/auth.dto";
 import { LoginResponseDTO } from "./dto/login-response.dto";
-import { LogoutResponseDTO } from "./dto/logout-response.dto";
 import { RefreshTokenDTO } from "./dto/refresh-token.dto";
 
 @Controller("auth")
@@ -23,12 +22,6 @@ export class Authentication {
     @ApiBody({ type: AuthDTO })
     async login(@Req() req: Request): Promise<LoginResponseDTO> {
         return await this.authService.login(req.user as UserDocument);
-    }
-
-    @Post("logout")
-    @ApiResponse({ type: LogoutResponseDTO })
-    async logout(@Body() logoutDTO: RefreshTokenDTO): Promise<LogoutResponseDTO> {
-        return await this.authService.logout(logoutDTO.refreshToken);
     }
 
     @Post("access-token")
