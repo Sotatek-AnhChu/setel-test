@@ -30,7 +30,7 @@ export class OrderWebhookService {
       cardId: order.cardId,
       status: isConfirmed ? EPaymentStatus.VALID : EPaymentStatus.INVALID,
     } as Payment);
-    this.httpService
+    await this.httpService
       .put(
         `${ORDER_SERVICE_CONFIRM}/${order._id}`,
         {
