@@ -1,9 +1,8 @@
-import { BullModule } from "@nestjs/bull";
+import { getQueueToken } from "@nestjs/bull";
 import { HttpModule, HttpStatus } from "@nestjs/common";
 import { getConnectionToken, MongooseModule } from "@nestjs/mongoose";
 import { Test, TestingModule } from "@nestjs/testing";
 import { Connection } from "mongoose";
-import { REDIS_HOST, REDIS_PASSWORD, REDIS_PORT } from "src/config/secrets";
 import { UserSchema, USER_DB } from "src/modules/users/users.entities";
 import { PaymentWebhookService } from "src/modules/webhook/payment-webhook.service";
 import { clearMongodb, closeInMongodConnection, rootMongooseTestModule } from "src/test/helper/mongodb-memory";
@@ -22,18 +21,16 @@ describe("Order Controller", () => {
   let moduleRef: TestingModule;
   let paymentWebhookService: PaymentWebhookService;
 
+  const queueMockProvider = {
+    add: jest.fn().mockImplementation(() => {
+      return;
+    }),
+  };
+
   beforeAll(async (done) => {
     moduleRef = await Test.createTestingModule({
       imports: [
         rootMongooseTestModule(),
-        BullModule.registerQueue({
-          name: "ORDER_QUEUE",
-          redis: {
-            host: REDIS_HOST,
-            port: REDIS_PORT,
-            password: REDIS_PASSWORD,
-          },
-        }),
         MongooseModule.forFeature([
           { name: ORDER_DB, schema: OrderSchema },
           { name: USER_DB, schema: UserSchema },
@@ -41,7 +38,16 @@ describe("Order Controller", () => {
         HttpModule,
       ],
       controllers: [OrderController],
-      providers: [OrderProcessor, OrderService, PaymentWebhookService, OrderRepository],
+      providers: [
+        OrderProcessor,
+        OrderService,
+        PaymentWebhookService,
+        OrderRepository,
+        {
+          provide: getQueueToken("ORDER_QUEUE"),
+          useValue: queueMockProvider,
+        },
+      ],
       exports: [OrderService],
     }).compile();
     orderService = moduleRef.get<OrderService>(OrderService);

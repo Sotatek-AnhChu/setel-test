@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">64.29% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/14</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">58.33% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/12</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -97,7 +97,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -105,10 +105,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Body, Controller, Param, Put } from "@nestjs/common";
@@ -118,25 +118,25 @@ import { ResponseTool } from "src/tools/response.tool";
 import { OrderService } from "../order/order.service";
 &nbsp;
 export interface PaymentResponseOrder {
-    isConfirmed: boolean;
+  isConfirmed: boolean;
 }
 &nbsp;
 @Controller("webhook/payment")
 @ApiTags("Webhook payment")
 export class PaymentWebhookController {
-<span class="fstat-no" title="function not covered" >    constructor(private readonly <span class="cstat-no" title="statement not covered" >o</span>rderService: O</span>rderService) {}
+  constructor(private readonly orderService: OrderService) {}
 &nbsp;
-    @Put("confirm/:id")
-    @ApiHeader({
-        name: "api-key",
-        description: "Api key",
-    })
-<span class="fstat-no" title="function not covered" >    async </span>confirm(@Body() result: PaymentResponseOrder, @Param("id") id: string) {
-        const { isConfirmed } = <span class="cstat-no" title="statement not covered" >result;</span>
-        const orderStatus = <span class="cstat-no" title="statement not covered" >isConfirmed == true ? EOrderStatus.CONFIRMED : EOrderStatus.CANCELLED;</span>
-<span class="cstat-no" title="statement not covered" >        this.orderService.confirmOrder(id, orderStatus);</span>
-<span class="cstat-no" title="statement not covered" >        return ResponseTool.PUT_OK("OK");</span>
-    }
+  @Put("confirm/:id")
+  @ApiHeader({
+    name: "api-key",
+    description: "Api key",
+  })
+  async confirm(@Body() result: PaymentResponseOrder, @Param("id") id: string) {
+    const { isConfirmed } = result;
+    const orderStatus = isConfirmed == true ? EOrderStatus.CONFIRMED : EOrderStatus.CANCELLED;
+    this.orderService.confirmOrder(id, orderStatus);
+    return ResponseTool.PUT_OK("OK");
+  }
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -145,7 +145,7 @@ export class PaymentWebhookController {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Jul 15 2021 16:41:28 GMT+0700 (Indochina Time)
+                at Thu Jul 15 2021 22:00:49 GMT+0700 (Indochina Time)
             </div>
         </div>
         <script src="../prettify.js"></script>

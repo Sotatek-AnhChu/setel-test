@@ -116,23 +116,23 @@
 <a name='L57'></a><a href='#L57'>57</a>
 <a name='L58'></a><a href='#L58'>58</a>
 <a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<a name='L60'></a><a href='#L60'>60</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -149,7 +149,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -157,14 +157,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
-<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -186,53 +186,53 @@ const eol = require("os").EOL;
 &nbsp;
 @Injectable()
 export class UsersService {
-    constructor(private readonly userRepository: UserRepository) {
-        eol;
-    }
+  constructor(private readonly userRepository: UserRepository) {
+    eol;
+  }
 &nbsp;
-    async validateUsernameOrEmail(username: string): Promise&lt;boolean&gt; {
-        return (
-            /^[A-Za-z0-9._-]{4,64}$/g.test(username) || // username
-<span class="branch-1 cbranch-no" title="branch not covered" >            /^[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/g.test(</span>
-                username,
-            )
-        ); // email
-    }
+  async validateUsernameOrEmail(username: string): Promise&lt;boolean&gt; {
+    return (
+      /^[A-Za-z0-9._-]{4,64}$/g.test(username) || // username
+<span class="branch-1 cbranch-no" title="branch not covered" >      /^[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/g.test(</span>
+        username,
+      )
+    ); // email
+  }
 &nbsp;
-    async findAll(option: QueryOption, conditions: any = <span class="branch-0 cbranch-no" title="branch not covered" >{})</span>: Promise&lt;UserDocument[]&gt; {
-        return this.userRepository.findAll(option, conditions);
-    }
+  async findAll(option: QueryOption, conditions: any = <span class="branch-0 cbranch-no" title="branch not covered" >{})</span>: Promise&lt;UserDocument[]&gt; {
+    return this.userRepository.findAll(option, conditions);
+  }
 &nbsp;
-    async count(conditions: any): Promise&lt;number&gt; {
-        return this.userRepository.count(conditions);
-    }
+  async count(conditions: any): Promise&lt;number&gt; {
+    return this.userRepository.count(conditions);
+  }
 &nbsp;
-    async findById(id: string): Promise&lt;UserDocument&gt; {
-        return this.userRepository.findById(id);
-    }
+  async findById(id: string): Promise&lt;UserDocument&gt; {
+    return this.userRepository.findById(id);
+  }
 &nbsp;
-    async findByUsernameOrEmail(username: string): Promise&lt;UserDocument&gt; {
-        return this.userRepository.findByUsernameOrEmail(username);
-    }
+  async findByUsernameOrEmail(username: string): Promise&lt;UserDocument&gt; {
+    return this.userRepository.findByUsernameOrEmail(username);
+  }
 &nbsp;
-    async createUser(user: User): Promise&lt;UserDocument&gt; {
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (!(await this.validateUsernameOrEmail(user.username))) {
-<span class="cstat-no" title="statement not covered" >            throw new ConflictException(400, MSG.FRONTEND.USERNAME_INVALID);</span>
+  async createUser(user: User): Promise&lt;UserDocument&gt; {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!(await this.validateUsernameOrEmail(user.username))) {
+<span class="cstat-no" title="statement not covered" >      throw new ConflictException(400, MSG.FRONTEND.USERNAME_INVALID);</span>
+    }
+    user.role = ERole.USER;
+    return this.userRepository
+      .create(user)
+      .then((result) =&gt; {
+        return result;
+      })
+      .catch((err) =&gt; {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (err.code === 11000) {
+          const field = Object.keys(err.keyValue).join(".");
+<span class="cstat-no" title="statement not covered" >          throw new ConflictException(409, `${field} had been used!`);</span>
         }
-        user.role = ERole.USER;
-        return this.userRepository
-            .create(user)
-            .then((result) =&gt; {
-                return result;
-            })
-            .catch((err) =&gt; {
-                <span class="missing-if-branch" title="else path not taken" >E</span>if (err.code === 11000) {
-                    const field = Object.keys(err.keyValue).join(".");
-<span class="cstat-no" title="statement not covered" >                    throw new ConflictException(409, `${field} had been used!`);</span>
-                }
-<span class="cstat-no" title="statement not covered" >                throw err;</span>
-            });
-    }
+<span class="cstat-no" title="statement not covered" >        throw err;</span>
+      });
+  }
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -241,7 +241,7 @@ export class UsersService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Jul 15 2021 16:41:28 GMT+0700 (Indochina Time)
+                at Thu Jul 15 2021 22:00:49 GMT+0700 (Indochina Time)
             </div>
         </div>
         <script src="../prettify.js"></script>

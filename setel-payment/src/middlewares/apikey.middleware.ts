@@ -4,10 +4,10 @@ import { APIKEY } from "src/config/secrets";
 
 @Injectable()
 export class ApikeyMiddleware implements NestMiddleware {
-    use(req: Request, res: Response, next: () => void) {
-        if (req.headers["api-key"] !== APIKEY) {
-            throw new UnauthorizedException(HttpStatus.UNAUTHORIZED, "invalid api-key");
-        }
-        next();
+  use(req: Request, res: Response, next: () => void) {
+    if (req.headers["api-key"] !== APIKEY) {
+      throw new UnauthorizedException(HttpStatus.UNAUTHORIZED, "invalid api-key");
     }
+    next();
+  }
 }

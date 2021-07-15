@@ -11,29 +11,29 @@ import { WebhookModule } from "./modules/webhook/webhook.module";
 const redisStore = require("cache-manager-redis-store");
 
 @Module({
-    imports: [
-        MongooseModule.forRoot(DATABASE_URI, {
-            useUnifiedTopology: true,
-            useNewUrlParser: true,
-            useFindAndModify: false,
-            useCreateIndex: true,
-            retryDelay: 5000,
-        }),
-        WebhookModule,
-        PaymentModule,
-    ],
-    providers: [
-        {
-            provide: APP_FILTER,
-            useClass: HttpExceptionFilter,
-        },
-    ],
+  imports: [
+    MongooseModule.forRoot(DATABASE_URI, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+      useFindAndModify: false,
+      useCreateIndex: true,
+      retryDelay: 5000,
+    }),
+    WebhookModule,
+    PaymentModule,
+  ],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
+  ],
 })
 export class AppModule implements NestModule {
-    configure(consumer: MiddlewareConsumer) {
-        consumer.apply(ApikeyMiddleware).forRoutes("/webhook/");
-    }
-    constructor() {
-        redisStore;
-    }
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(ApikeyMiddleware).forRoutes("/webhook/");
+  }
+  constructor() {
+    redisStore;
+  }
 }

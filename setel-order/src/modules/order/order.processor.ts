@@ -32,29 +32,26 @@ export class OrderProcessor {
       return;
     }
     if (order.status == EOrderStatus.CANCELLED) {
-      this.paymentWebhookService
-        .makeRefundOrder(order)
-        .then(() => {
-          done(null, "Has been cancelled");
-        })
-        .catch((e) => {
-          done(e);
-        });
+      try {
+        await this.paymentWebhookService.makeConfirmOrder(order);
+        done(null, "Has been cancelled");
+      } catch (e) {
+        done(e);
+      }
       return;
     }
-    this.orderModel
-      .findByIdAndUpdate(id, {
-        status: EOrderStatus.DELIVERED,
-      })
-      .exec()
-      .then(() => {
-        done(null, "Success");
-      })
-      .catch((e) => {
-        done(e);
-        return;
-      });
-    done(null, "Suceess");
+    try {
+      await this.orderModel
+        .findByIdAndUpdate(id, {
+          status: EOrderStatus.DELIVERED,
+        })
+        .exec();
+      done(null, "Success");
+      return;
+    } catch (e) {
+      done(e);
+      return;
+    }
   }
 
   @OnQueueWaiting()

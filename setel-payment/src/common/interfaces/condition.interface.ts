@@ -1,3 +1,3 @@
 export interface Condition {
-    [key: string]: any;
+  [key: string]: any;
 }

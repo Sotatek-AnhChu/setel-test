@@ -191,9 +191,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -302,7 +302,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { InjectQueue } from "@nestjs/bull";
-import { BadRequestException, ForbiddenException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { Queue } from "bull";
 import { EOrderStatus } from "src/config/constants";
 import { QueryPostOption } from "src/tools/request.tool";
@@ -312,116 +312,116 @@ import { OrderRepository } from "./order.repository";
 &nbsp;
 @Injectable()
 export class OrderService {
-    constructor(
-        private readonly orderRepository: OrderRepository,
-        @InjectQueue("ORDER_QUEUE")
-        private readonly orderQueue: Queue,
-    ) {}
+  constructor(
+    private readonly orderRepository: OrderRepository,
+    @InjectQueue("ORDER_QUEUE")
+    private readonly orderQueue: Queue,
+  ) {}
 &nbsp;
-    async create(order: Order) {
-        return this.orderRepository.create(order);
+  async create(order: Order) {
+    return this.orderRepository.create(order);
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  async </span>getAll(query: QueryPostOption) {
+<span class="cstat-no" title="statement not covered" >    return this.orderRepository.getMany(query);</span>
+  }
+&nbsp;
+  getById({ id }: { id: string }) {
+    return this.orderRepository.getById({ id });
+  }
+&nbsp;
+  async confirmOrder(id: string, status: EOrderStatus) {
+    const order = await this.orderRepository
+      .updateOne({
+        conditions: {
+          _id: id,
+          status: EOrderStatus.CREATED,
+        },
+        update: {
+          status,
+        },
+        options: {
+          new: true,
+        },
+      })
+      .exec();
+    if (order != null &amp;&amp; order != undefined) {
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (order.status == EOrderStatus.CONFIRMED) {
+        this.setToDelivery(id);
+      }
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  async </span>setToDelivery(id: string) {
+<span class="cstat-no" title="statement not covered" >    this.orderQueue.add(CONFIRMED_EVENT_NAME, id, {</span>
+      delay: 20000,
+      timeout: 3000,
+    });
+  }
+&nbsp;
+  async cancelOrder(idOrder: string, username: string): Promise&lt;any&gt; {
+    const oldOrder = await this.orderRepository.getById({ id: idOrder }).exec();
+    if (!oldOrder) {
+      throw new NotFoundException(OrderService.name, "Cannot find order with this id");
+    }
+    if ((oldOrder as OrderDocument).user != username) {
+      throw new ForbiddenException(OrderService.name, "Not same username");
+    }
+    if (oldOrder.status === EOrderStatus.CONFIRMED || oldOrder.status === EOrderStatus.CREATED) {
+      const result = await this.orderRepository
+        .updateById({
+          id: oldOrder._id,
+          update: {
+            $set: {
+              status: EOrderStatus.CANCELLED,
+            },
+          },
+          options: {
+            new: true,
+          },
+        })
+        .exec();
+      return result;
+    }
+    throw new BadRequestException(OrderService.name, `Cannot change order with ${oldOrder.status} status`);
+  }
+&nbsp;
+  async updateOrderWithId(id: string, order: Order, username: string): Promise&lt;OrderDocument&gt; {
+    const oldOrder = await this.orderRepository.getById({ id }).lean().exec();
+    if (oldOrder == null || oldOrder == undefined) {
+      throw new NotFoundException(OrderService.name, "Cannot find order with this id");
+    }
+    if ((oldOrder as OrderDocument).user != username) {
+      throw new ForbiddenException(OrderService.name, "Not same username");
+    }
+    order = {
+      ...oldOrder,
+      ...order,
+    };
+    if (
+      oldOrder.status == EOrderStatus.CANCELLED ||
+      oldOrder.status == EOrderStatus.DELIVERED ||
+      oldOrder.status == EOrderStatus.CONFIRMED
+    ) {
+      throw new BadRequestException(OrderService.name, `Cannot change order with ${oldOrder.status} status`);
     }
 &nbsp;
-<span class="fstat-no" title="function not covered" >    async </span>getAll(query: QueryPostOption) {
-<span class="cstat-no" title="statement not covered" >        return this.orderRepository.getMany(query);</span>
+    if (order.status == EOrderStatus.DELIVERED || order.status == EOrderStatus.CONFIRMED) {
+      throw new BadRequestException(OrderService.name, `Cannot change order to ${order.status} status`);
     }
-&nbsp;
-    getById({ id }: { id: string }) {
-        return this.orderRepository.getById({ id });
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (Object.values(EOrderStatus).indexOf(order.status) &lt; 0) {
+<span class="cstat-no" title="statement not covered" >      throw new BadRequestException(OrderService.name, "Status not valid");</span>
     }
-&nbsp;
-    async confirmOrder(id: string, status: EOrderStatus) {
-        const order = await this.orderRepository
-            .updateOne({
-                conditions: {
-                    _id: id,
-                    status: EOrderStatus.CREATED,
-                },
-                update: {
-                    status,
-                },
-                options: {
-                    new: true,
-                },
-            })
-            .exec();
-        if (order != null &amp;&amp; order != undefined) {
-            <span class="missing-if-branch" title="else path not taken" >E</span>if (order.status == EOrderStatus.CONFIRMED) {
-                this.setToDelivery(id);
-            }
-        }
-    }
-&nbsp;
-<span class="fstat-no" title="function not covered" >    async </span>setToDelivery(id: string) {
-<span class="cstat-no" title="statement not covered" >        this.orderQueue.add(CONFIRMED_EVENT_NAME, id, {</span>
-            delay: 20000,
-            timeout: 3000,
-        });
-    }
-&nbsp;
-    async cancelOrder(idOrder: string, username: string): Promise&lt;any&gt; {
-        const oldOrder = await this.orderRepository.getById({ id: idOrder }).exec();
-        if (!oldOrder) {
-            throw new NotFoundException(HttpStatus.NOT_FOUND, "Cannot find order with this id");
-        }
-        if ((oldOrder as OrderDocument).user != username) {
-            throw new ForbiddenException(HttpStatus.FORBIDDEN, "Not same username");
-        }
-        if (oldOrder.status === EOrderStatus.CONFIRMED || oldOrder.status === EOrderStatus.CREATED) {
-            const result = await this.orderRepository
-                .updateById({
-                    id: oldOrder._id,
-                    update: {
-                        $set: {
-                            status: EOrderStatus.CANCELLED,
-                        },
-                    },
-                    options: {
-                        new: true,
-                    },
-                })
-                .exec();
-            return result;
-        }
-        throw new BadRequestException(HttpStatus.BAD_REQUEST, `Cannot change order with ${oldOrder.status} status`);
-    }
-&nbsp;
-    async updateOrderWithId(id: string, order: Order, username: string): Promise&lt;OrderDocument&gt; {
-        const oldOrder = await this.orderRepository.getById({ id }).lean().exec();
-        if (oldOrder == null || oldOrder == undefined) {
-            throw new NotFoundException(HttpStatus.NOT_FOUND, "Cannot find order with this id");
-        }
-        if ((oldOrder as OrderDocument).user != username) {
-            throw new ForbiddenException(HttpStatus.FORBIDDEN, "Not same username");
-        }
-        order = {
-            ...oldOrder,
-            ...order,
-        };
-        if (
-            oldOrder.status == EOrderStatus.CANCELLED ||
-            oldOrder.status == EOrderStatus.DELIVERED ||
-            oldOrder.status == EOrderStatus.CONFIRMED
-        ) {
-            throw new BadRequestException(HttpStatus.BAD_REQUEST, `Cannot change order with ${oldOrder.status} status`);
-        }
-&nbsp;
-        if (order.status == EOrderStatus.DELIVERED || order.status == EOrderStatus.CONFIRMED) {
-            throw new BadRequestException(HttpStatus.BAD_REQUEST, `Cannot change order to ${order.status} status`);
-        }
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (Object.values(EOrderStatus).indexOf(order.status) &lt; 0) {
-<span class="cstat-no" title="statement not covered" >            throw new BadRequestException(HttpStatus.BAD_REQUEST, "Status not valid");</span>
-        }
-        return this.orderRepository
-            .updateById({
-                id,
-                update: order,
-                options: {
-                    new: true,
-                },
-            })
-            .exec();
-    }
+    return this.orderRepository
+      .updateById({
+        id,
+        update: order,
+        options: {
+          new: true,
+        },
+      })
+      .exec();
+  }
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -430,7 +430,7 @@ export class OrderService {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Jul 15 2021 16:41:28 GMT+0700 (Indochina Time)
+                at Thu Jul 15 2021 22:00:49 GMT+0700 (Indochina Time)
             </div>
         </div>
         <script src="../prettify.js"></script>
