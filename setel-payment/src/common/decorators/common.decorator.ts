@@ -19,7 +19,7 @@ export const ApiQueryCond = () =>
     ApiQuery({
         name: "cond",
         required: false,
-        description: "Điều kiện tìm kiếm theo MongoDB",
+        description: "condition MongoDB",
     });
 
 export const ApiQuerySelect = () =>
@@ -80,9 +80,9 @@ export const ApiQueryCustom = () =>
         name: "custom",
         required: false,
         examples: {
-            "Default (các giá trị query mặc định)": { value: "" },
-            "0 (các giá trị query mặc định)": { value: 0 },
-            "1 (các giá trị query tự chọn": { value: 1 },
+            "Default value": { value: "" },
+            "Manaual value": { value: 0 },
+            "Auto value": { value: 1 },
         },
     });
 
@@ -97,12 +97,12 @@ export const QueryGet = () => Query(QueryGetPipe);
 export const ApiCommonErrors = () =>
     applyDecorators(
         ApiUnauthorizedResponse({
-            description: `Thông tin xác thực không chính xác (thông tin đăng nhập hoặc JWT). <a href=/error-example/unauthorized target=_blank style="text-decoration:none"> Ví dụ</a>`,
+            description: `Unauthorized`,
         }),
         ApiForbiddenResponse({
-            description: `Người dùng không được cấp quyền truy cập nguồn nội dung. <a href=/error-example/forbidden target=_blank style="text-decoration:none"> Ví dụ</a>`,
+            description: `Forbiddent`,
         }),
         ApiInternalServerErrorResponse({
-            description: `Lỗi hệ thống. <a href=/error-example/internal-server-error target=_blank style="text-decoration:none"> Ví dụ</a>`,
+            description: `Server error `,
         }),
     );

@@ -5,22 +5,22 @@ import { User } from "../../modules/users/users.entities";
 
 @Injectable()
 export class PersonalCacheInterceptor extends CacheInterceptor {
-    private readonly logger = new Logger(PersonalCacheInterceptor.name);
+  private readonly logger = new Logger(PersonalCacheInterceptor.name);
 
-    trackBy(context: ExecutionContext): string | undefined {
-        const httpAdapter = this.httpAdapterHost.httpAdapter;
-        const isHttpApp = httpAdapter && !!httpAdapter.getRequestMethod;
-        const cacheKeyMetadata = this.reflector.get(CACHE_KEY_METADATA, context.getHandler());
-        this.logger.log(cacheKeyMetadata);
-        if (!isHttpApp || cacheKeyMetadata) {
-            return cacheKeyMetadata;
-        }
-        const request = context.getArgByIndex(0);
-        if (httpAdapter.getRequestMethod(request) !== "GET") {
-            return undefined;
-        }
-        const url = context.switchToHttp().getRequest<Request>().originalUrl;
-        const user = context.switchToHttp().getRequest<Request>()?.user as User | null;
-        return `${url}:${user?.username}`;
+  trackBy(context: ExecutionContext): string | undefined {
+    const httpAdapter = this.httpAdapterHost.httpAdapter;
+    const isHttpApp = httpAdapter && !!httpAdapter.getRequestMethod;
+    const cacheKeyMetadata = this.reflector.get(CACHE_KEY_METADATA, context.getHandler());
+    this.logger.log(cacheKeyMetadata);
+    if (!isHttpApp || cacheKeyMetadata) {
+      return cacheKeyMetadata;
     }
+    const request = context.getArgByIndex(0);
+    if (httpAdapter.getRequestMethod(request) !== "GET") {
+      return undefined;
+    }
+    const url = context.switchToHttp().getRequest<Request>().originalUrl;
+    const user = context.switchToHttp().getRequest<Request>()?.user as User | null;
+    return `${url}:${user?.username}`;
+  }
 }

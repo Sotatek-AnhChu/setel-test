@@ -7,26 +7,26 @@ import { PaymentDocument, PAYMENT_DB } from "./entities/payment.entity";
 
 @Injectable()
 export class PaymentService extends BaseService<PaymentDocument> {
-    constructor(
-        @InjectModel(PAYMENT_DB)
-        private readonly paymentModel: Model<PaymentDocument>,
-    ) {
-        super(paymentModel);
-    }
+  constructor(
+    @InjectModel(PAYMENT_DB)
+    private readonly paymentModel: Model<PaymentDocument>,
+  ) {
+    super(paymentModel);
+  }
 
-    async refundPayment(orderId: string) {
-        return this.paymentModel
-            .findOneAndUpdate(
-                {
-                    orderId,
-                },
-                {
-                    status: EPaymentStatus.REFUND,
-                },
-                {
-                    new: true,
-                },
-            )
-            .exec();
-    }
+  async refundPayment(orderId: string) {
+    return this.paymentModel
+      .findOneAndUpdate(
+        {
+          orderId,
+        },
+        {
+          status: EPaymentStatus.REFUND,
+        },
+        {
+          new: true,
+        },
+      )
+      .exec();
+  }
 }

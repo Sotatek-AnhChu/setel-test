@@ -6,8 +6,8 @@ import { PaymentWebhookController } from "./payment-webhook.controller";
 import { PaymentWebhookService } from "./payment-webhook.service";
 
 @Module({
-    imports: [HttpModule, MongooseModule.forFeature([{ name: ORDER_DB, schema: OrderSchema }]), OrderModule],
-    controllers: [PaymentWebhookController],
-    providers: [PaymentWebhookService],
+  imports: [HttpModule, MongooseModule.forFeature([{ name: ORDER_DB, schema: OrderSchema }]), OrderModule],
+  controllers: [PaymentWebhookController],
+  providers: [PaymentWebhookService],
 })
 export class WebhookModule {}

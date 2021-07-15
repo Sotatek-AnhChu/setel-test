@@ -9,18 +9,18 @@ import { JwtStrategy } from "./strategies/jwt.strategy";
 import { LocalStrategy } from "./strategies/local.strategy";
 
 @Module({
-    imports: [
-        forwardRef(() => UsersModule),
-        PassportModule,
-        JwtModule.register({
-            secret: JWT_SECRET,
-            signOptions: {
-                expiresIn: REFRESH_TOKEN_EXP,
-            },
-        }),
-    ],
-    providers: [AuthService, LocalStrategy, JwtStrategy],
-    controllers: [Authentication],
-    exports: [AuthService],
+  imports: [
+    forwardRef(() => UsersModule),
+    PassportModule,
+    JwtModule.register({
+      secret: JWT_SECRET,
+      signOptions: {
+        expiresIn: REFRESH_TOKEN_EXP,
+      },
+    }),
+  ],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
+  controllers: [Authentication],
+  exports: [AuthService],
 })
 export class AuthModule {}

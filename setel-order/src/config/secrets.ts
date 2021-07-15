@@ -4,8 +4,8 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 export const getEnv = (key: string, ignore = false): string => {
-    const value = process.env[key];
-    return value;
+  const value = process.env[key];
+  return value;
 };
 
 // Server

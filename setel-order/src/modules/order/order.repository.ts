@@ -6,10 +6,10 @@ import { OrderDocument, ORDER_DB } from "./entities/order.entity";
 
 @Injectable()
 export class OrderRepository extends BaseRepository<OrderDocument> {
-    constructor(
-        @InjectModel(ORDER_DB)
-        private readonly orderModel: Model<OrderDocument>,
-    ) {
-        super(orderModel);
-    }
+  constructor(
+    @InjectModel(ORDER_DB)
+    private readonly orderModel: Model<OrderDocument>,
+  ) {
+    super(orderModel);
+  }
 }

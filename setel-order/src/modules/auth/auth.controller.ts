@@ -14,19 +14,19 @@ import { RefreshTokenDTO } from "./dto/refresh-token.dto";
 @ApiTags("Auth")
 @ApiCommonErrors()
 export class Authentication {
-    constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
-    @UseGuards(AuthGuard("local"))
-    @Post("login")
-    @ApiOkResponse({ type: LoginResponseDTO })
-    @ApiBody({ type: AuthDTO })
-    async login(@Req() req: Request): Promise<LoginResponseDTO> {
-        return await this.authService.login(req.user as UserDocument);
-    }
+  @UseGuards(AuthGuard("local"))
+  @Post("login")
+  @ApiOkResponse({ type: LoginResponseDTO })
+  @ApiBody({ type: AuthDTO })
+  async login(@Req() req: Request): Promise<LoginResponseDTO> {
+    return await this.authService.login(req.user as UserDocument);
+  }
 
-    @Post("access-token")
-    @ApiResponse({ type: AccessTokenResponse })
-    async getAccessToken(@Body() refreshTokenDTO: RefreshTokenDTO): Promise<AccessTokenResponse> {
-        return await this.authService.signAccessToken(refreshTokenDTO.refreshToken);
-    }
+  @Post("access-token")
+  @ApiResponse({ type: AccessTokenResponse })
+  async getAccessToken(@Body() refreshTokenDTO: RefreshTokenDTO): Promise<AccessTokenResponse> {
+    return await this.authService.signAccessToken(refreshTokenDTO.refreshToken);
+  }
 }

@@ -3,49 +3,49 @@ import * as msg from "../config/message.json";
 export const MSG = msg;
 
 export enum EOrderStatus {
-    CREATED = "CREATED",
-    CONFIRMED = "CONFIRMED",
-    CANCELLED = "CANCELLED",
-    DELIVERED = "DELIVERED",
+  CREATED = "CREATED",
+  CONFIRMED = "CONFIRMED",
+  CANCELLED = "CANCELLED",
+  DELIVERED = "DELIVERED",
 }
 
 export enum ESettingValueType {
-    STRING = "string",
-    BOOLEAN = "boolean",
-    NUMBER = "number",
+  STRING = "string",
+  BOOLEAN = "boolean",
+  NUMBER = "number",
 }
 
 export enum EIsLooked {
-    NO,
-    YES,
+  NO,
+  YES,
 }
 export enum ENotificationType {
-    LEVEL1,
-    LEVEL2,
-    LEVEL3,
+  LEVEL1,
+  LEVEL2,
+  LEVEL3,
 }
 
 export enum ETypeAppVersion {
-    IOS = "IOS",
-    ANDROID = "ANDROID",
+  IOS = "IOS",
+  ANDROID = "ANDROID",
 }
 
 export enum ERole {
-    ADMIN,
-    ADMIN_SYSTEM,
-    USER,
-    GUEST,
-    DEVELOPER,
+  ADMIN,
+  ADMIN_SYSTEM,
+  USER,
+  GUEST,
+  DEVELOPER,
 }
 
 export enum EGender {
-    MALE,
-    FEMALE,
+  MALE,
+  FEMALE,
 }
 
 export enum ENotificationStatus {
-    UNREAD,
-    READ,
+  UNREAD,
+  READ,
 }
 
 export const DEFAULT_CONCURRENCY_VERY_LOW = 4;
@@ -54,6 +54,6 @@ export const DEFAULT_CONCURRENCY_MEDIUM = 64;
 export const DEFAULT_CONCURRENCY_HIGH = 256;
 
 export enum EIsHidden {
-    HIDDEN = "hidden",
-    SHOW = "show",
+  HIDDEN = "hidden",
+  SHOW = "show",
 }

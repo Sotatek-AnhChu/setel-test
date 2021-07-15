@@ -10,20 +10,20 @@ import { OrderRepository } from "./order.repository";
 import { OrderService } from "./order.service";
 
 @Module({
-    imports: [
-        BullModule.registerQueue({
-            name: "ORDER_QUEUE",
-            redis: {
-                host: REDIS_HOST,
-                port: REDIS_PORT,
-                password: REDIS_PASSWORD,
-            },
-        }),
-        MongooseModule.forFeature([{ name: ORDER_DB, schema: OrderSchema }]),
-        HttpModule,
-    ],
-    controllers: [OrderController],
-    providers: [OrderProcessor, OrderService, PaymentWebhookService, OrderRepository],
-    exports: [OrderService],
+  imports: [
+    BullModule.registerQueue({
+      name: "ORDER_QUEUE",
+      redis: {
+        host: REDIS_HOST,
+        port: REDIS_PORT,
+        password: REDIS_PASSWORD,
+      },
+    }),
+    MongooseModule.forFeature([{ name: ORDER_DB, schema: OrderSchema }]),
+    HttpModule,
+  ],
+  controllers: [OrderController],
+  providers: [OrderProcessor, OrderService, PaymentWebhookService, OrderRepository],
+  exports: [OrderService],
 })
 export class OrderModule {}

@@ -14,19 +14,19 @@ import { UsersService } from "./users.service";
 @ApiCommonErrors()
 @ApiTags("Users")
 export class UsersController {
-    constructor(private readonly userService: UsersService) {}
+  constructor(private readonly userService: UsersService) {}
 
-    @Get("my/profile")
-    @Authorization()
-    @ApiOkResponse({ type: ResponseDTO })
-    async getMyProfile(@ReqUser("_id") userId: string): Promise<ResponseDTO> {
-        const data = await this.userService.findById(userId);
-        return ResponseTool.GET_OK(data);
-    }
+  @Get("my/profile")
+  @Authorization()
+  @ApiOkResponse({ type: ResponseDTO })
+  async getMyProfile(@ReqUser("_id") userId: string): Promise<ResponseDTO> {
+    const data = await this.userService.findById(userId);
+    return ResponseTool.GET_OK(data);
+  }
 
-    @Post("/register")
-    @ApiCreatedResponse({ type: GetUserDTO })
-    async create(@Body() user: RegisterUserDTO): Promise<ResponseDTO> {
-        return ResponseTool.CREATED(await this.userService.createUser(user as User));
-    }
+  @Post("/register")
+  @ApiCreatedResponse({ type: GetUserDTO })
+  async create(@Body() user: RegisterUserDTO): Promise<ResponseDTO> {
+    return ResponseTool.CREATED(await this.userService.createUser(user as User));
+  }
 }
