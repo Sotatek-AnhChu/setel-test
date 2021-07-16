@@ -25,7 +25,7 @@ export class OrderProcessor {
   })
   async handleConfirmedEvent(job: Job<string>, done: DoneCallback) {
     const id: string = job.data;
-    const order = await this.orderModel.findById(id).exec();
+    const order = await this.orderModel.findById(id).lean().exec();
     this.logger.verbose("Processing: " + job.id);
     if (order === null || order === undefined) {
       done(null, "Has been deleted");

@@ -7,7 +7,7 @@ import { EOrderStatus } from "src/config/constants";
 import { UserSchema, USER_DB } from "src/modules/users/users.entities";
 import { PaymentWebhookService } from "src/modules/webhook/payment-webhook.service";
 import { clearMongodb, closeInMongodConnection, rootMongooseTestModule } from "src/test/helper/mongodb-memory";
-import { orderSample } from "src/test/helper/order/order.helper";
+import { listOrderSample } from "src/test/helper/order/order.helper";
 import { Order, OrderSchema, ORDER_DB } from "../entities/order.entity";
 import { OrderController } from "../order.controller";
 import { OrderProcessor } from "../order.processor";
@@ -69,7 +69,7 @@ describe("OrderService", () => {
   };
 
   describe("Create Order", () => {
-    const SampleCreateOrder = orderSample[1];
+    const SampleCreateOrder = listOrderSample[1];
     it("Create order ok", async () => {
       const result = await createOrder(SampleCreateOrder);
       expect(result).toEqual(result);
@@ -81,7 +81,7 @@ describe("OrderService", () => {
     });
   });
   describe("Get Order By Id", () => {
-    const SampleCreateOrder = orderSample[1];
+    const SampleCreateOrder = listOrderSample[1];
     it("Get Order ok", async () => {
       const orderCreated = await createOrder(SampleCreateOrder);
       const result = await orderService.getById({ id: orderCreated._id }).lean();
@@ -90,7 +90,7 @@ describe("OrderService", () => {
     });
   });
   describe("Confirm order", () => {
-    const SampleCreateOrder = orderSample[1];
+    const SampleCreateOrder = listOrderSample[1];
     it("Success set to delivery", async () => {
       const orderCreated = await createOrder(SampleCreateOrder);
       const mock = jest.fn();
@@ -112,7 +112,7 @@ describe("OrderService", () => {
     });
   });
   describe("Cancel Order", () => {
-    const SampleCreateOrder = orderSample[1];
+    const SampleCreateOrder = listOrderSample[1];
     it("Success cancel Order", async () => {
       const orderCreated = await createOrder(SampleCreateOrder);
       await orderService.cancelOrder(orderCreated._id, orderCreated.user as any);
@@ -143,7 +143,7 @@ describe("OrderService", () => {
     });
   });
   describe("update order with id", () => {
-    const SampleCreateOrder = orderSample[1];
+    const SampleCreateOrder = listOrderSample[1];
     it("Not found order", async () => {
       const order = { ...SampleCreateOrder };
       await expect(

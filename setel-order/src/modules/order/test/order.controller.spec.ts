@@ -6,7 +6,7 @@ import { Connection } from "mongoose";
 import { UserSchema, USER_DB } from "src/modules/users/users.entities";
 import { PaymentWebhookService } from "src/modules/webhook/payment-webhook.service";
 import { clearMongodb, closeInMongodConnection, rootMongooseTestModule } from "src/test/helper/mongodb-memory";
-import { orderSample } from "src/test/helper/order/order.helper";
+import { listOrderSample } from "src/test/helper/order/order.helper";
 import { createdUser } from "src/test/helper/user/user.helper";
 import { Order, OrderDocument, OrderSchema, ORDER_DB } from "../entities/order.entity";
 import { OrderController } from "../order.controller";
@@ -73,7 +73,7 @@ describe("Order Controller", () => {
     expect(orderController).toBeDefined();
   });
   it("Create order", async () => {
-    const SampleCreateOrder = orderSample[0];
+    const SampleCreateOrder = listOrderSample[0];
     const order: Order = {
       ...SampleCreateOrder,
       user: createdUser.username,
@@ -99,10 +99,10 @@ describe("Order Controller", () => {
   it("Get my", async () => {
     const mockGetAll = jest.spyOn(orderService, "getAll").mockImplementation(
       async (): Promise<OrderDocument[]> => {
-        return Promise.resolve(orderSample as OrderDocument[]);
+        return Promise.resolve(listOrderSample as OrderDocument[]);
       },
     );
-    const username = orderSample[0].user.toString();
+    const username = listOrderSample[0].user.toString();
     const toBeCallObject = {
       conditions: {
         user: username,
@@ -115,11 +115,11 @@ describe("Order Controller", () => {
     };
     const result = await orderController.getAllMyOrder(username);
     expect(mockGetAll).toBeCalledWith(toBeCallObject);
-    expect(result.data).toEqual(orderSample);
+    expect(result.data).toEqual(listOrderSample);
     expect(result.statusCode).toEqual(HttpStatus.OK);
   });
   it("Update order", async () => {
-    const sampleOrder = orderSample[0];
+    const sampleOrder = listOrderSample[0];
     const username = sampleOrder.user.toString();
     const uuidTesting = "60efb4666048dc7a39db65ce";
     const mockUpdate = jest.spyOn(orderService, "updateOrderWithId").mockImplementation(() => {
