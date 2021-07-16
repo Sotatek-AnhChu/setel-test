@@ -27,6 +27,14 @@ Run app
 
 - npm run start
 
+Test app
+
+- npm run test
+
+Test coverate app 
+
+- npm run test:cov
+
 Last line of console log is the port of app, 
 
 Swagger address: http://localhost:{port}/api
