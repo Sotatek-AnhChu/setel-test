@@ -11,7 +11,27 @@ import { AppModule } from "./app.module";
 import { MSG } from "./config/constants";
 import { RedisIoAdapter } from "./config/redis-adapter";
 import { PRODUCTION, PROJECT_NAME, PROJECT_VERSION, SERVER_PORT, SWAGGER_PATH } from "./config/secrets";
+import { RegisterUserDTO } from "./modules/users/dto/register-user.dto";
+import { User } from "./modules/users/users.entities";
+import { UsersService } from "./modules/users/users.service";
 import { MongoTool } from "./tools/mongo.tool";
+
+async function createSampleUser(usersService: UsersService): Promise<void> {
+  const firstUser: RegisterUserDTO = {
+    firstName: "testuser",
+    lastName: "testuser",
+    fullName: "testuser testuser",
+    username: "testuser",
+    password: "testuser",
+    email: "testuser@example.com",
+    phoneNumber: "0936609206",
+  };
+  const user = await usersService.findByUsernameOrEmail(firstUser.username);
+  if (!user) {
+    await usersService.createUser(firstUser as User);
+  }
+  return;
+}
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -88,6 +108,8 @@ async function bootstrap() {
   app.use(bodyParser.json({ limit: "10mb" }));
   app.enableCors();
   await app.listen(SERVER_PORT);
+  const usersService = app.get(UsersService);
+  await createSampleUser(usersService);
   console.log("Server start on: " + SERVER_PORT);
 }
 bootstrap();

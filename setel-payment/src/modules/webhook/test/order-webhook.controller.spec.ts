@@ -5,7 +5,6 @@ import { Connection } from "mongoose";
 import { PaymentModule } from "src/modules/payment/payment.module";
 import { clearMongodb, closeInMongodConnection, rootMongooseTestModule } from "src/test/helper/mongodb-memory";
 import { orderSample } from "src/test/helper/webhook/order-list";
-import { OrderDTO } from "../dto/order.dto";
 import { OrderWebhookController } from "../order-webhook.controller";
 import { OrderWebhookService } from "../order-webhook.service";
 

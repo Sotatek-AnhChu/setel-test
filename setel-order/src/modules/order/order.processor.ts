@@ -33,7 +33,7 @@ export class OrderProcessor {
     }
     if (order.status == EOrderStatus.CANCELLED) {
       try {
-        await this.paymentWebhookService.makeConfirmOrder(order);
+        await this.paymentWebhookService.makeRefundOrder(order);
         done(null, "Has been cancelled");
       } catch (e) {
         done(e);

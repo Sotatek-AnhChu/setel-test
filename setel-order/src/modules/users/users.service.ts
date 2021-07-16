@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from "@nestjs/common";
+import { ConflictException, Injectable, Logger } from "@nestjs/common";
 import { ERole, MSG } from "../../config/constants";
 import { QueryOption } from "../../tools/request.tool";
 import { User, UserDocument } from "./users.entities";
@@ -12,7 +12,6 @@ export class UsersService {
   constructor(private readonly userRepository: UserRepository) {
     eol;
   }
-
   async validateUsernameOrEmail(username: string): Promise<boolean> {
     return (
       /^[A-Za-z0-9._-]{4,64}$/g.test(username) || // username
