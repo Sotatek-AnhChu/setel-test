@@ -42,16 +42,14 @@ export class UsersService {
       throw new BadRequestException(UsersService.name, MSG.FRONTEND.USERNAME_INVALID);
     }
     user.role = ERole.USER;
-    return this.userRepository
-      .create(user)
-      .then((result) => {
-        return result;
-      })
-      .catch((err) => {
-        if (err.code === 11000) {
-          throw new ConflictException(UsersService.name, "Username of email had been used!");
-        }
-        throw err;
-      });
+    try {
+      const userCreated = await this.userRepository.create(user);
+      return userCreated;
+    } catch (err) {
+      if (err.code === 11000) {
+        throw new ConflictException(UsersService.name, "Username of email had been used!");
+      }
+      throw err;
+    }
   }
 }
