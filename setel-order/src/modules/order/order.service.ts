@@ -1,6 +1,7 @@
 import { InjectQueue } from "@nestjs/bull";
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { Queue } from "bull";
+import { Query } from "mongoose";
 import { EOrderStatus } from "src/config/constants";
 import { QueryPostOption } from "src/tools/request.tool";
 import { Order, OrderDocument } from "./entities/order.entity";
@@ -15,19 +16,19 @@ export class OrderService {
     private readonly orderQueue: Queue,
   ) {}
 
-  async create(order: Order) {
+  async create(order: Order): Promise<OrderDocument> {
     return this.orderRepository.create(order);
   }
 
-  async getAll(query: QueryPostOption) {
+  async getAll(query: QueryPostOption): Promise<OrderDocument[]> {
     return this.orderRepository.getMany(query);
   }
 
-  getById({ id }: { id: string }) {
+  getById({ id }: { id: string }): Query<Order, OrderDocument> {
     return this.orderRepository.getById({ id });
   }
 
-  async confirmOrder(id: string, status: EOrderStatus) {
+  async confirmOrder(id: string, status: EOrderStatus): Promise<void> {
     const order = await this.orderRepository
       .updateOne({
         conditions: {
@@ -49,14 +50,14 @@ export class OrderService {
     }
   }
 
-  async setToDelivery(id: string) {
+  async setToDelivery(id: string): Promise<void> {
     this.orderQueue.add(CONFIRMED_EVENT_NAME, id, {
       delay: 20000,
       timeout: 3000,
     });
   }
 
-  async cancelOrder(idOrder: string, username: string): Promise<any> {
+  async cancelOrder(idOrder: string, username: string): Promise<OrderDocument> {
     const oldOrder = await this.orderRepository.getById({ id: idOrder }).exec();
     if (!oldOrder) {
       throw new NotFoundException(OrderService.name, "Cannot find order with this id");
