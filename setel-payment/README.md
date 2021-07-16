@@ -4,6 +4,7 @@
 - Docker-compose 3.8
 - Mongodb 4.2
 - Redis 6.2.4
+- Node 14
 
 Mongodb and redis run in docker and expose port to local host.
 
