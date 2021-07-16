@@ -187,13 +187,12 @@ describe("OrderService", () => {
       ).rejects.toBeInstanceOf(BadRequestException);
     });
     it("Success chang order", async () => {
-      const orderCreated = await orderService.create(SampleCreateOrder);
-      const orderToBeUpdate = orderCreated;
+      const orderToBeUpdate = await orderService.create(SampleCreateOrder);
       orderToBeUpdate.product = Math.random().toString(36).substring(7);
       orderToBeUpdate.cardId = Math.random().toString(36).substring(7);
       orderToBeUpdate.price = Math.random() * 300;
-      await orderService.updateOrderWithId(orderCreated._id, orderToBeUpdate, orderCreated.user as any);
-      const result = await orderService.getById({ id: orderCreated.id }).lean();
+      await orderService.updateOrderWithId(orderToBeUpdate._id, orderToBeUpdate, orderToBeUpdate.user as any);
+      const result = await orderService.getById({ id: orderToBeUpdate.id }).lean();
       expect(orderToBeUpdate.product).toEqual(result.product);
       expect(orderToBeUpdate.cardId).toEqual(result.cardId);
       expect(orderToBeUpdate.price).toEqual(result.price);
