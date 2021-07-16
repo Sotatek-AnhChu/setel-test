@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, Logger } from "@nestjs/common";
+import { BadRequestException, ConflictException, Injectable, Logger } from "@nestjs/common";
 import { ERole, MSG } from "../../config/constants";
 import { QueryOption } from "../../tools/request.tool";
 import { User, UserDocument } from "./users.entities";
@@ -39,7 +39,7 @@ export class UsersService {
 
   async createUser(user: User): Promise<UserDocument> {
     if (!(await this.validateUsernameOrEmail(user.username))) {
-      throw new ConflictException(400, MSG.FRONTEND.USERNAME_INVALID);
+      throw new BadRequestException(UsersService.name, MSG.FRONTEND.USERNAME_INVALID);
     }
     user.role = ERole.USER;
     return this.userRepository
@@ -49,8 +49,7 @@ export class UsersService {
       })
       .catch((err) => {
         if (err.code === 11000) {
-          const field = Object.keys(err.keyValue).join(".");
-          throw new ConflictException(409, `${field} had been used!`);
+          throw new ConflictException(UsersService.name, "Username of email had been used!");
         }
         throw err;
       });

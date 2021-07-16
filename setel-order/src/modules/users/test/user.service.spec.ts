@@ -1,6 +1,8 @@
+import { BadRequestException, ConflictException } from "@nestjs/common";
 import { getConnectionToken, MongooseModule } from "@nestjs/mongoose";
 import { Test, TestingModule } from "@nestjs/testing";
 import { Connection } from "mongoose";
+import { MSG } from "src/config/constants";
 import { clearMongodb, closeInMongodConnection, rootMongooseTestModule } from "src/test/helper/mongodb-memory";
 import { createdUser, createdUser2 } from "src/test/helper/user/user.helper";
 import { QueryOption } from "../../../tools/request.tool";
@@ -105,10 +107,21 @@ describe("UserService", () => {
       delete userTest.password;
       expect(result).toMatchObject(userTest);
     });
-    it("Throws error", async () => {
+
+    it("Create username not invalid", async () => {
+      const userTest = { ...createdUser };
+      userTest.username = "?????"; //not valid username;
+      await expect(usersService.createUser(userTest)).rejects.toThrow(
+        new BadRequestException(UsersService.name, MSG.FRONTEND.USERNAME_INVALID),
+      );
+    });
+
+    it("Throws error when duplicate username", async () => {
       const userTest = { ...createdUser };
       await usersService.createUser(userTest);
-      await expect(usersService.createUser(userTest)).rejects.toBeDefined();
+      await expect(usersService.createUser(userTest)).rejects.toThrow(
+        new ConflictException(UsersService.name, "Username of email had been used!"),
+      );
     });
   });
 });
