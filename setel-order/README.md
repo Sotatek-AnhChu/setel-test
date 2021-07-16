@@ -37,7 +37,7 @@ Run app
 
 Run test
 
-- npm run tes
+- npm run test
 
 Run test coverate
 
