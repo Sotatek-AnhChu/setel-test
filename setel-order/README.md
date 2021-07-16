@@ -13,6 +13,7 @@ password: testuser
 - Mongodb 4.2
 - Redis 6.2.4
 - git
+- Node 14
 
 Mongodb and redis run in docker and expose port to local host.
 
