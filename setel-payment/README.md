@@ -33,7 +33,7 @@ Test app
 
 Test coverate app 
 
-- npm run test:Cov
+- npm run test:cov
 
 Last line of console log is the port of app, 
 
