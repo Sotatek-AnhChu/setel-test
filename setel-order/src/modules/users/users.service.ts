@@ -1,4 +1,4 @@
-import { BadRequestException, ConflictException, Injectable, Logger } from "@nestjs/common";
+import { BadRequestException, ConflictException, Injectable } from "@nestjs/common";
 import { ERole, MSG } from "../../config/constants";
 import { QueryOption } from "../../tools/request.tool";
 import { User, UserDocument } from "./users.entities";
