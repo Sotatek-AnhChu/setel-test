@@ -43,7 +43,7 @@ export class OrderService {
         },
       })
       .exec();
-    if (!order) {
+    if (order) {
       if (order.status == EOrderStatus.CONFIRMED) {
         this.setToDelivery(id);
       }

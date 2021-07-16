@@ -90,12 +90,12 @@ describe("Auth service", () => {
     it("Wrong passwrod", async () => {
       await usersService.createUser(authUser);
       await expect(authService.validateUser(authUser.username, authUser.password + "123")).rejects.toThrow(
-        new UnauthorizedException(401, MSG.FRONTEND.AUTH_FAILED_WRONG_PASSWORD),
+        new UnauthorizedException(AuthService.name, MSG.FRONTEND.AUTH_FAILED_WRONG_PASSWORD),
       );
     });
     it("Not found username", async () => {
       await expect(authService.validateUser(authUser.username, authUser.password)).rejects.toThrow(
-        new UnauthorizedException(401, MSG.FRONTEND.AUTH_FAILED_USERNAME_NOT_EXIST),
+        new UnauthorizedException(AuthService.name, MSG.FRONTEND.AUTH_FAILED_USERNAME_NOT_EXIST),
       );
     });
   });

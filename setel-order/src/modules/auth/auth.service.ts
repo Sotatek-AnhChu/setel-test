@@ -28,9 +28,9 @@ export class AuthService {
       if (usePassword) {
         return user;
       }
-      throw new UnauthorizedException(401, MSG.FRONTEND.AUTH_FAILED_WRONG_PASSWORD);
+      throw new UnauthorizedException(AuthService.name, MSG.FRONTEND.AUTH_FAILED_WRONG_PASSWORD);
     }
-    throw new UnauthorizedException(401, MSG.FRONTEND.AUTH_FAILED_USERNAME_NOT_EXIST);
+    throw new UnauthorizedException(AuthService.name, MSG.FRONTEND.AUTH_FAILED_USERNAME_NOT_EXIST);
   }
 
   async login(user: UserDocument, timestamp: number = Date.now()): Promise<LoginResponseDTO> {
