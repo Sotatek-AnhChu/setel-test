@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post } from "@nestjs/common";
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from "@nestjs/swagger";
+import { ApiConsumes, ApiCreatedResponse, ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { Authorization } from "../../common/decorators/auth.decorator";
 import { ApiCommonErrors } from "../../common/decorators/common.decorator";
 import { ReqUser } from "../../common/decorators/user.decorator";

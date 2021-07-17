@@ -24,7 +24,7 @@ async function createSampleUser(usersService: UsersService): Promise<void> {
     username: "testuser",
     password: "testuser",
     email: "testuser@example.com",
-    phoneNumber: "0936609206",
+    phoneNumber: "+1-541-754-3010",
   };
   const user = await usersService.findByUsernameOrEmail(firstUser.username);
   if (!user) {

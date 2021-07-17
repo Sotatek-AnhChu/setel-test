@@ -46,6 +46,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
               stack: this.convertStack(exception.stack),
             },
       },
+      exception,
       statusCode,
     };
     response.status(statusCode).json(errorObject);
