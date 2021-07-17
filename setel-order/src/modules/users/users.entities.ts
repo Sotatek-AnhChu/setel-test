@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { ApiProperty } from "@nestjs/swagger";
 import * as bcrypt from "bcryptjs";
 import { IsEmail, IsString, Length } from "class-validator";
 import * as mongoose from "mongoose";
@@ -17,7 +16,6 @@ export const USER_DB = "Users";
   collation: { locale: "vi" },
 })
 export class User {
-  @ApiProperty()
   @IsString()
   @Prop({
     type: String,
@@ -28,7 +26,6 @@ export class User {
   })
   firstName: string;
 
-  @ApiProperty()
   @IsString()
   @Prop({
     type: String,
@@ -39,7 +36,6 @@ export class User {
   })
   lastName: string;
 
-  @ApiProperty()
   @IsFullName()
   @Prop({
     type: String,
@@ -50,20 +46,17 @@ export class User {
   })
   fullName: string;
 
-  @ApiProperty()
   @Prop({
     type: Date,
   })
   birthday: Date;
 
-  @ApiProperty()
   @Prop({
     enum: Object.values(EGender),
   })
   gender: EGender;
 
   @Length(USER_CONST.USERNAME_MIN_LENGTH, USER_CONST.USERNAME_MAX_LENGTH)
-  @ApiProperty()
   @IsUsername()
   @Prop({
     type: String,
@@ -76,7 +69,6 @@ export class User {
   username: string;
 
   @Length(USER_CONST.PASSWORD_MIN_LENGTH, USER_CONST.PASSWORD_MAX_LENGTH)
-  @ApiProperty()
   @IsPassword()
   @Prop({
     type: String,
@@ -86,7 +78,6 @@ export class User {
   })
   password: string;
 
-  @ApiProperty()
   @IsEmail()
   @Prop({
     type: String,
@@ -97,14 +88,12 @@ export class User {
   })
   email: string;
 
-  @ApiProperty({ required: true })
   @IsPhoneNumber()
   @Prop({
     maxlength: USER_CONST.PHONE_NUMBER_MAX_LENGTH,
   })
   phoneNumber: string;
 
-  @ApiProperty()
   @Prop({
     enum: Object.values(ERole),
   })

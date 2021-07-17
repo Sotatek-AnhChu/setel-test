@@ -8,7 +8,7 @@ import { ResponseTool } from "src/tools/response.tool";
 import { User } from "../users/users.entities";
 import { PaymentWebhookService } from "../webhook/payment-webhook.service";
 import { CreateOrderDTO } from "./dto/create-order.dto";
-import { UpdateOrderDTO } from "./dto/updatre-order.dto";
+import { UpdateOrderDTO } from "./dto/update-order.dto";
 import { Order } from "./entities/order.entity";
 import { OrderService } from "./order.service";
 

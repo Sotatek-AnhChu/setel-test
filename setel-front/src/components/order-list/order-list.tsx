@@ -95,8 +95,9 @@ export const OrderList = ({ classes: propsClasses }: Props) => {
     CallService.cancelOrder(order._id).then(() => {
       fetchData();
     }).catch((e) => {
-      console.log(e.response?.data?.exception?.response?.error);
-      message.error(e.response?.data?.exception?.response?.error);
+      const messageText = e.response?.data?.error?.message || "";
+      console.log(messageText);
+      message.error(messageText);
     });
   };
 

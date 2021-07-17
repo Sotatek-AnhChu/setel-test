@@ -46,7 +46,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
               stack: this.convertStack(exception.stack),
             },
       },
-      exception,
       statusCode,
     };
     response.status(statusCode).json(errorObject);
@@ -54,7 +53,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
   handleHttpException(exception: any) {
     const statusCode = Number(exception.getStatus());
-    const message = exception.response.message;
+    const message = exception.response.error;
     return [statusCode, message];
   }
 
