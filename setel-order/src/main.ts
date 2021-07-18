@@ -12,7 +12,7 @@ import { MSG } from "./config/constants";
 import { RedisIoAdapter } from "./config/redis-adapter";
 import { PRODUCTION, PROJECT_NAME, PROJECT_VERSION, SERVER_PORT, SWAGGER_PATH } from "./config/secrets";
 import { RegisterUserDTO } from "./modules/users/dto/register-user.dto";
-import { User } from "./modules/users/users.entities";
+import { User } from "./modules/users/entity/users.entities";
 import { UsersService } from "./modules/users/users.service";
 import { MongoTool } from "./tools/mongo.tool";
 

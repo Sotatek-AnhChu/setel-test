@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post } from "@nestjs/common";
-import { ApiConsumes, ApiCreatedResponse, ApiOkResponse, ApiTags } from "@nestjs/swagger";
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { Authorization } from "../../common/decorators/auth.decorator";
 import { ApiCommonErrors } from "../../common/decorators/common.decorator";
 import { ReqUser } from "../../common/decorators/user.decorator";
@@ -7,7 +7,7 @@ import { ResponseDTO } from "../../common/dto/response.dto";
 import { ResponseTool } from "../../tools/response.tool";
 import { GetUserDTO } from "./dto/get-user.dto";
 import { RegisterUserDTO } from "./dto/register-user.dto";
-import { User } from "./users.entities";
+import { User } from "./entity/users.entities";
 import { UsersService } from "./users.service";
 
 @Controller("/users")

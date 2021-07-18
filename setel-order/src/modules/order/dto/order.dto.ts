@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsDefined, IsNotEmpty, IsNumber, IsString, Min } from "class-validator";
 import { EOrderStatus } from "src/config/constants";
-import { User } from "src/modules/users/users.entities";
+import { User } from "src/modules/users/entity/users.entities";
 
 export class OrderDTO {
   @ApiProperty({

@@ -5,7 +5,7 @@ import { ReqUser } from "src/common/decorators/user.decorator";
 import { ResponseDTO } from "src/common/dto/response.dto";
 import { ERole } from "src/config/constants";
 import { ResponseTool } from "src/tools/response.tool";
-import { User } from "../users/users.entities";
+import { User } from "../users/entity/users.entities";
 import { PaymentWebhookService } from "../webhook/payment-webhook.service";
 import { CreateOrderDTO } from "./dto/create-order.dto";
 import { UpdateOrderDTO } from "./dto/update-order.dto";

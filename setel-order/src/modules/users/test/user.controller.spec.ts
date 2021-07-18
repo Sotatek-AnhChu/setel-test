@@ -6,7 +6,7 @@ import { clearMongodb, closeInMongodConnection, rootMongooseTestModule } from "s
 import { createdUser } from "src/test/helper/user/user.helper";
 import { RegisterUserDTO } from "../dto/register-user.dto";
 import { UsersController } from "../users.controller";
-import { UserDocument, UserSchema, USER_DB } from "../users.entities";
+import { UserDocument, UserSchema, USER_DB } from "../entity/users.entities";
 import { UserRepository } from "../users.repository";
 import { UsersService } from "../users.service";
 

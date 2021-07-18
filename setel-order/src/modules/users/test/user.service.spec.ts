@@ -7,7 +7,7 @@ import { clearMongodb, closeInMongodConnection, rootMongooseTestModule } from "s
 import { createdUser, createdUser2 } from "src/test/helper/user/user.helper";
 import { QueryOption } from "../../../tools/request.tool";
 import { UsersController } from "../users.controller";
-import { User, UserSchema, USER_DB } from "../users.entities";
+import { User, UserSchema, USER_DB } from "../entity/users.entities";
 import { UserRepository } from "../users.repository";
 import { UsersService } from "../users.service";
 

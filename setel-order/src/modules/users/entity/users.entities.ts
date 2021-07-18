@@ -1,11 +1,12 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as bcrypt from "bcryptjs";
+import { Exclude } from "class-transformer";
 import { IsEmail, IsString, Length } from "class-validator";
 import * as mongoose from "mongoose";
-import { IsFullName, IsPassword, IsPhoneNumber, IsUsername } from "../../common/decorators/constants.decorator";
-import { EGender, ERole } from "../../config/constants";
-import { StringTool } from "../../tools/string.tool";
-import { USER_CONST } from "./constants/users.constant";
+import { IsFullName, IsPassword, IsPhoneNumber, IsUsername } from "../../../common/decorators/constants.decorator";
+import { EGender, ERole } from "../../../config/constants";
+import { StringTool } from "../../../tools/string.tool";
+import { USER_CONST } from "../constants/users.constant";
 
 export const USER_DB = "Users";
 
@@ -76,6 +77,7 @@ export class User {
     minlength: USER_CONST.PASSWORD_MIN_LENGTH,
     maxLength: USER_CONST.PASSWORD_MAX_LENGTH,
   })
+  @Exclude()
   password: string;
 
   @IsEmail()

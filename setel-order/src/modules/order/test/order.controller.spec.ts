@@ -3,7 +3,7 @@ import { HttpModule, HttpStatus } from "@nestjs/common";
 import { getConnectionToken, MongooseModule } from "@nestjs/mongoose";
 import { Test, TestingModule } from "@nestjs/testing";
 import { Connection } from "mongoose";
-import { UserSchema, USER_DB } from "src/modules/users/users.entities";
+import { UserSchema, USER_DB } from "src/modules/users/entity/users.entities";
 import { PaymentWebhookService } from "src/modules/webhook/payment-webhook.service";
 import { clearMongodb, closeInMongodConnection, rootMongooseTestModule } from "src/test/helper/mongodb-memory";
 import { listOrderSample } from "src/test/helper/order/order.helper";

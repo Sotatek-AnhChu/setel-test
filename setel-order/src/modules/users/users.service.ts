@@ -1,7 +1,7 @@
 import { BadRequestException, ConflictException, Injectable } from "@nestjs/common";
 import { ERole, MSG } from "../../config/constants";
 import { QueryOption } from "../../tools/request.tool";
-import { User, UserDocument } from "./users.entities";
+import { User, UserDocument } from "./entity/users.entities";
 import { UserRepository } from "./users.repository";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires

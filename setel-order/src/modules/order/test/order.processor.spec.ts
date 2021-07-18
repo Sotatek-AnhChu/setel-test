@@ -5,7 +5,7 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { DoneCallback, Job } from "bull";
 import { Connection, Model } from "mongoose";
 import { EOrderStatus } from "src/config/constants";
-import { UserSchema, USER_DB } from "src/modules/users/users.entities";
+import { UserSchema, USER_DB } from "src/modules/users/entity/users.entities";
 import { PaymentWebhookService } from "src/modules/webhook/payment-webhook.service";
 import { clearMongodb, closeInMongodConnection, rootMongooseTestModule } from "src/test/helper/mongodb-memory";
 import { listOrrderSamplerConfirmed } from "src/test/helper/order/order.helper";

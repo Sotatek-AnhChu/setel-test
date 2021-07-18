@@ -3,7 +3,7 @@ import { IsDefined, IsNotEmpty, IsNumber, IsString, Min } from "class-validator"
 import * as mongoose from "mongoose";
 import { Document } from "mongoose";
 import { EOrderStatus } from "src/config/constants";
-import { User, USER_DB } from "src/modules/users/users.entities";
+import { User, USER_DB } from "src/modules/users/entity/users.entities";
 
 export const ORDER_DB = "order";
 

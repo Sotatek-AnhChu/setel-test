@@ -4,7 +4,7 @@ import { ObjectID } from "mongodb";
 import { MSG } from "../../config/constants";
 import { ACCESS_TOKEN_EXP, JWT_SECRET, REFRESH_TOKEN_EXP } from "../../config/secrets";
 import { AuthToolService } from "../tool/auth-tool/auth-tool.service";
-import { User, UserDocument } from "../users/users.entities";
+import { User, UserDocument } from "../users/entity/users.entities";
 import { UsersService } from "../users/users.service";
 import { AccessTokenResponse } from "./dto/access-token-response.dto";
 import { LoginResponseDTO } from "./dto/login-response.dto";

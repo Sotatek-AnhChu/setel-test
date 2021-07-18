@@ -3,7 +3,7 @@ import { AuthGuard } from "@nestjs/passport";
 import { ApiBody, ApiOkResponse, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
 import { ApiCommonErrors } from "../../common/decorators/common.decorator";
-import { UserDocument } from "../users/users.entities";
+import { UserDocument } from "../users/entity/users.entities";
 import { AuthService } from "./auth.service";
 import { AccessTokenResponse } from "./dto/access-token-response.dto";
 import { AuthDTO } from "./dto/auth.dto";

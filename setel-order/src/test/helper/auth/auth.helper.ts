@@ -1,5 +1,5 @@
 import { EGender, ERole } from "src/config/constants";
-import { User } from "src/modules/users/users.entities";
+import { User } from "src/modules/users/entity/users.entities";
 
 export const authUser: User = {
   firstName: "Test",

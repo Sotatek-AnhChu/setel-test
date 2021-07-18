@@ -3,7 +3,7 @@ import { Request } from "express";
 import * as path from "path";
 import { MSG } from "../../config/constants";
 import { PRODUCTION } from "../../config/secrets";
-import { User } from "../../modules/users/users.entities";
+import { User } from "../../modules/users/entity/users.entities";
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
