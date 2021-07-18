@@ -35,6 +35,6 @@ Test coverate app
 
 - npm run test:cov
 
-Last line of console log is the port of app, 
+Last line of console log is the port of app. (Default 3029)
 
 Swagger address: http://localhost:{port}/api
