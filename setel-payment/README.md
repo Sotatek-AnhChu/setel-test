@@ -12,7 +12,7 @@ Mongodb and redis run in docker and expose port to local host.
 
 Docker compose require enviroment variable to start.
 - cp .env-example .env 
-- docker-compose up
+- docker-compose up (-d for detach mode )
 
 Keep terminal window run.
 
